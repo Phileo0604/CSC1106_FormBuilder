@@ -15,3 +15,5 @@
 
     <input type="submit" name="login" value="Login">
 </form>
+
+<!-- example login: email: test@gmail.com pw: 12345 -->

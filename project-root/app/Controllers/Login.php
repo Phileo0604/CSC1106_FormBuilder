@@ -50,3 +50,4 @@ class Login extends Controller
         }
     }
 }
+// example login: email: test@gmail.com pw: 12345
