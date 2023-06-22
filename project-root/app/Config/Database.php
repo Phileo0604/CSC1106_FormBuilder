@@ -29,7 +29,7 @@ class Database extends Config
         'hostname' => 'localhost',
         'username' => '',
         'password' => '',
-        'database' => '',
+        'database' => APPPATH . 'Database',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
