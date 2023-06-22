@@ -17,7 +17,7 @@ class FormBuilder
     public function buildForm()
     {
         $builder = $this->db->table('form');
-        $fields = $builder->get()->getResultArray()->where;
+        $fields = $builder->get()->getResultArray();
 
         $html = '<form>';
 
@@ -34,7 +34,6 @@ class FormBuilder
     protected function buildField($field)
 {
     $html = '<div>';
-    $html .= '<label for="' . $field['id'] . '">' . $field['label'] . '</label>';
 
     $attributes = [
         'type' => $field['type'],
