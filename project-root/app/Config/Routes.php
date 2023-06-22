@@ -31,7 +31,11 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 use App\Controllers\FormController;
+use App\Controllers\Login;
+use App\Controllers\Register;
 
+$routes->match(['get', 'post'], 'account/login', [Login::class, 'login']);
+$routes->match(['get', 'post'], 'account/register', [Register::class, 'create']);
 $routes->get('form', [FormController::class, 'index']);
 $routes->get('test', [FormController::class, 'test']);
 
