@@ -33,7 +33,9 @@ $routes->get('/', 'Home::index');
 use App\Controllers\FormController;
 use App\Controllers\Login;
 use App\Controllers\Register;
+use App\Controllers\ResetPassword;
 
+$routes->match(['get', 'post'], 'account/reset', [ResetPassword::class, 'reset']);
 $routes->match(['get', 'post'], 'account/login', [Login::class, 'login']);
 $routes->match(['get', 'post'], 'account/register', [Register::class, 'create']);
 $routes->get('form', [FormController::class, 'index']);

@@ -8,7 +8,7 @@ class AccountModel extends Model
 {
     protected $table = 'account';
 
-    protected $allowedFields = ['email', 'password'];
+    protected $allowedFields = ['email', 'password', 'security_question', 'security_answer'];
 
     public function getId($id = false)
     {
