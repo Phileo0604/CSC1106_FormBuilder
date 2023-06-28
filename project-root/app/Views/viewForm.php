@@ -6,7 +6,6 @@
 </head>
 <body>
     <h1>Your View</h1>
-
     <?= $form ?>
 </body>
 </html>

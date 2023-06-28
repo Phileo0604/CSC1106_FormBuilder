@@ -8,8 +8,11 @@ class FormMigration extends Migration
 {
     public function up()
     {
+        $this->forge->dropTable('fields');
+        $this->forge->dropTable('forms');
+        // Fields Table
         $this->forge->addField([
-            'id' => [
+            'fieldID' => [
                 'type' => 'INT',
                 'size' => 11,
                 'unsigned' => true,
@@ -34,9 +37,46 @@ class FormMigration extends Migration
                 'type' => 'BOOLEAN',
                 'default' => false,
             ],
+            'label' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true,
+            ],
+            'formID' => [
+                'type' => 'INT',
+                'unsigned' => true,
+            ],
         ]);
-        $this->forge->addKey('id', true);
-        $this->forge->createTable('form');
+
+        $this->forge->addKey('fieldID', true);
+        // $this->forge->addForeignKey('formID', 'forms', 'formID', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('fields');
+        $seeder = \Config\Database::seeder();
+        $seeder->call('FieldSeeder');
+
+
+        //Forms Table
+        $this->forge->addField([
+            'formID' => [
+                'type' => 'INT',
+                'size' => 11,
+                'unsigned' => true,
+                'auto_increment' => true,
+            ],
+            'fieldID' => [
+                'type' => 'INT',
+            ],
+            'userID' => [
+                'type' => 'INT',
+            ],
+            'formName' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+            ]
+        ]);
+
+        $this->forge->addKey('formID', true);
+        $this->forge->createTable('forms');
         $seeder = \Config\Database::seeder();
         $seeder->call('FormSeeder');
     }

@@ -8,39 +8,29 @@ class FormSeeder extends Seeder
 {
     public function run()
     {
-        $formData = [
+        $data = [
             [
-                'type' => 'text',
-                'id' => 'fullname',
-                'size' => 30,
-                'placeholder' => 'Enter your full name',
-                'required' => true,
+                'formID' => 1,
+                'fieldID' => 1,
+                'userID' => 1,
+                'formName' => 'Form 1',
             ],
             [
-                'type' => 'email',
-                'id' => 'email',
-                'size' => 40,
-                'placeholder' => 'Enter your email address',
-                'required' => true,
+                'formID' => 2,
+                'fieldID' => 2,
+                'userID' => 1,
+                'formName' => 'Form 2',
             ],
             [
-                'type' => 'password',
-                'id' => 'password',
-                'size' => 20,
-                'placeholder' => 'Enter your password',
-                'required' => true,
+                'formID' => 3,
+                'fieldID' => 3,
+                'userID' => 2,
+                'formName' => 'Form 3',
             ],
-            [
-                'type' => 'textarea',
-                'id' => 'message',
-                'size' => 100,
-                'placeholder' => 'Enter your message',
-                'required' => false,
-            ],
+            // Add more mock data as needed
         ];
 
-        foreach ($formData as $data) {
-            $this->db->table('form')->insert($data);
-        }
+        // Insert the data into the 'fields' table
+        $this->db->table('forms')->insertBatch($data);
     }
 }

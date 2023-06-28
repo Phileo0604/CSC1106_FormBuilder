@@ -38,7 +38,9 @@ use App\Controllers\ResetPassword;
 $routes->match(['get', 'post'], 'account/reset', [ResetPassword::class, 'reset']);
 $routes->match(['get', 'post'], 'account/login', [Login::class, 'login']);
 $routes->match(['get', 'post'], 'account/register', [Register::class, 'create']);
-$routes->get('form', [FormController::class, 'index']);
+$routes->get('view', [FormController::class, 'view']);
+//$routes->get('create', [FormController::class, 'create']);
+$routes->match(['get', 'post'], 'create', [FormController::class, 'create']);
 $routes->get('test', [FormController::class, 'test']);
 
 /*
