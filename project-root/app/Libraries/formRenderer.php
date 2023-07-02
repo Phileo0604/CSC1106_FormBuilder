@@ -14,6 +14,8 @@ class FormRenderer
     {
         $this->db = $db;
     }
+
+    // Build form html
     public function buildForm($fieldData)
     {
 
@@ -29,30 +31,31 @@ class FormRenderer
         return $html;
     }
 
+    // Build each field
     protected function buildField($field)
-{
-    $html = '<div>';
-    $html .= '<label for="' . $field['label'] . '">' . $field['label'] . '</label>' . '<br>';
-    $attributes = [
-        'type' => $field['type'],
-        'size' => $field['size'],
-        'placeholder' => $field['placeholder'],
-        'required' => $field['required'],
-    ];
+    {
+        $html = '<div>';
+        $html .= '<label for="' . $field['label'] . '">' . $field['label'] . '</label>' . '<br>';
+        $attributes = [
+            'type' => $field['type'],
+            'size' => $field['size'],
+            'placeholder' => $field['placeholder'],
+            'required' => $field['required'],
+        ];
 
-    $inputTag = '<input';
-    foreach ($attributes as $name => $value) {
-        if (!empty($value)) {
-            $inputTag .= ' ' . $name . '="' . $value . '"';
+        $inputTag = '<input';
+        foreach ($attributes as $name => $value) {
+            if (!empty($value)) {
+                $inputTag .= ' ' . $name . '="' . $value . '"';
+            }
         }
+        $inputTag .= '>';
+
+        $html .= $inputTag;
+        $html .= '</div>';
+
+        return $html;
     }
-    $inputTag .= '>';
-
-    $html .= $inputTag;
-    $html .= '</div>';
-
-    return $html;
-}
 
 public function getNextFormID(){
     $query = $this->db->table('fields')->selectMax('formID')->get();
@@ -75,15 +78,14 @@ public function getText()
 
     public function getDropdown()
     {
-        $attributes=[
-            'type' => 'text',
-            'size' => 20,
-            'placeholder' => 'Enter text here',
-            'required' => false,
-            'label' => 'Name',
-            'formID' => $this->getNextFormID(),
-        ];
-        return $attributes;
+        // Add attributes for dropdown
+
+    }
+
+    public function getCheckbox()
+    {
+        // Add attributes for Checkbox
+
     }
 
 }

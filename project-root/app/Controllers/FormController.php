@@ -72,13 +72,18 @@ class FormController extends BaseController
             'label' => $fieldInput['label'],
             'formID' => $formRenderer->getNextFormID(),
         ];
-
-        
         // Execute selected action
         if ($fieldType === 'text'){
             print_r("hello");
             $fieldData[] = $fields;
-        }else if($save === 'save'){
+        }else if($fieldType ==='dropdown'){
+            // Code for dropdown
+        }
+        else if($fieldType === 'checkbox'){
+            // Code for checkbox
+            
+        }
+        else if($save === 'save'){
             // Set formID of current fieldData
             foreach ($fieldData as &$field) {
                 $field['formId'] = $formRenderer->getNextFormID();

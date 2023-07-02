@@ -60,13 +60,19 @@
                     </form>
                 </div>
                 <div class="tab-pane fade" id="tab2">
-                <form>
+                <form method="POST" action="<?= base_url('/create') ?>">
+                    <?= csrf_field() ?>
                     <!-- Form inputs for DropDown -->
+                    <button type="submit" class="btn btn-primary" name="fieldType" value="text">Add</button>
+                    <button type="submit" class="btn btn-primary" name="save" value="save">Save</button>
                 </form>
                 </div>
                 <div class="tab-pane fade" id="tab3">
-                <form>
+                <form method="POST" action="<?= base_url('/create') ?>">
+                    <?= csrf_field() ?>
                     <!-- Form inputs for CheckBox -->
+                    <button type="submit" class="btn btn-primary" name="fieldType" value="text">Add</button>
+                    <button type="submit" class="btn btn-primary" name="save" value="save">Save</button>
                 </form>
                 </div>
             </div>
