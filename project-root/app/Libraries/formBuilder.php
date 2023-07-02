@@ -14,9 +14,11 @@ class FormBuilder
         $this->db = $db;
     }
 
-    public function buildForm()
+    public function buildForm($formID)
     {
-        $builder = $this->db->table('fields')->where('formID', 1);
+        // get userid
+        // from user id > get formid
+        $builder = $this->db->table('fields')->where('formID', $formID);
         $fields = $builder->get()->getResultArray();
 
         $html = '<form>';

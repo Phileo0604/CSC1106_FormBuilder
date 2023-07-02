@@ -5,7 +5,7 @@
     <title>Your View</title>
 </head>
 <body>
-    <h1>Your View</h1>
+    <h1>Hello</h1>
     <?= $form ?>
 </body>
 </html>

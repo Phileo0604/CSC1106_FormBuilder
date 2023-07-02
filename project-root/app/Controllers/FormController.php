@@ -22,55 +22,78 @@ class FormController extends BaseController
         }
 
         
-        public function view()
+    private $fieldData;
+        public function view($slug = null)
         {
             $db = Database::connect();
             $formBuilder = new FormBuilder($db);
-            $form = $formBuilder->buildForm('example_form');
-
+            $form = $formBuilder->buildForm($slug);
+            print_r($fieldData);
             return view('viewForm', ['form' => $form]);
         }
 
     
-    private $fieldData;
     public function create()
     {
+        // Initialize database connection
+        $db = Database::connect();
+        // Initialize FormRenderer library
+        $formRenderer = new FormRenderer($db);
         // Check if the field data is already stored in the session
         $fieldData = session()->get('fieldData');
-        
+        $nextFormID = $formRenderer->getNextFormID();
         //print_r($formRenderer->getText());
         if (!$fieldData) {
             // If not stored in the session, initialize the field data
-            $fieldData = [
-                [
-                    'type' => 'text',
-                    'size' => 30,
-                    'placeholder' => 'Enter your full name',
-                    'required' => true,
-                    'label' => 'Name',
-                    'formId' => '1',
-                ],
-            ];
+            $fieldData = [];
         }
-
-        $formRenderer = new FormRenderer();
+        // Build the form and store the form html in $form
         $form = $formRenderer->buildForm($fieldData);
-        
-        print_r($formRenderer->getText());
+        print_r($fieldData);
+        $fields = $formRenderer->getText();
+        print_r($fields);
+        // Check for post request
         if (!$this->request->is('post')) {
-            return view('createForm', ['form' => $form]);
+            return view('createForm', ['form' => $form, 'nextFormID' => $nextFormID, 'fields' => $fields]);
+        }
+        // Initialize model
+        $model = model(FieldModel::class);
+
+        // Get POST request
+        $fieldInput = $this->request->getPost(['type', 'size', 'placeholder', 'required', 'label']);
+        $fieldType = $this->request->getPost('fieldType');
+        $save = $this->request->getPost('save');
+        // Store input into fieldsArray
+        $fields = [
+            'type' => $fieldInput['type'],
+            'size' => $fieldInput['size'],
+            'placeholder' => $fieldInput['placeholder'],
+            'required' => $fieldInput['required'],
+            'label' => $fieldInput['label'],
+            'formID' => $formRenderer->getNextFormID(),
+        ];
+
+        
+        // Execute selected action
+        if ($fieldType === 'text'){
+            print_r("hello");
+            $fieldData[] = $fields;
+        }else if($save === 'save'){
+            // Set formID of current fieldData
+            foreach ($fieldData as &$field) {
+                $field['formId'] = $formRenderer->getNextFormID();
+            }
+            // Insert fields to fields table
+            $model->insertFields($fieldData);
+            $fieldData = [];
+            session_destroy();
         }
         
-        $fieldType = $this->request->getPost('type');
-        if ($fieldType === 'text'){
-            $fieldData[] = $formRenderer->getText();
-        }
-
         // Store the updated field data in the session
         session()->set('fieldData', $fieldData);
         $form = $formRenderer->buildForm($fieldData);
-
-        return view('createForm', ['form' => $form]);
+        
+        return view('createForm', ['form' => $form, 'nextFormID' => $nextFormID, 'fields'=>$fields]);
     }
     
 

@@ -42,6 +42,7 @@ $routes->get('view', [FormController::class, 'view']);
 //$routes->get('create', [FormController::class, 'create']);
 $routes->match(['get', 'post'], 'create', [FormController::class, 'create']);
 $routes->get('test', [FormController::class, 'test']);
+$routes->match(['get', 'post'], 'view/(:segment)', [FormController::class, 'view']);
 
 /*
  * --------------------------------------------------------------------

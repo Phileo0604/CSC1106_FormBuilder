@@ -8,7 +8,12 @@ use CodeIgniter\Database\ConnectionInterface;
 class FormRenderer
 {
     
+    protected $db;
 
+    public function __construct(ConnectionInterface $db)
+    {
+        $this->db = $db;
+    }
     public function buildForm($fieldData)
     {
 
@@ -48,14 +53,35 @@ class FormRenderer
 
     return $html;
 }
+
+public function getNextFormID(){
+    $query = $this->db->table('fields')->selectMax('formID')->get();
+    $result = $query->getRow();
+    $highestID = $result->formID;
+    return $highestID+1;
+}
+
 public function getText()
     {
         $attributes=[
             'type' => 'text',
-            'size' => '20',
-            'placeholder' => '',
+            'size' => 20,
+            'placeholder' => 'Enter text here',
             'required' => false,
             'label' => 'Name',
+        ];
+        return $attributes;
+    }
+
+    public function getDropdown()
+    {
+        $attributes=[
+            'type' => 'text',
+            'size' => 20,
+            'placeholder' => 'Enter text here',
+            'required' => false,
+            'label' => 'Name',
+            'formID' => $this->getNextFormID(),
         ];
         return $attributes;
     }
