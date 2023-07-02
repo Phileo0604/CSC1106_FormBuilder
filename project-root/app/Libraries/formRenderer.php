@@ -57,14 +57,15 @@ class FormRenderer
         return $html;
     }
 
-public function getNextFormID(){
-    $query = $this->db->table('fields')->selectMax('formID')->get();
-    $result = $query->getRow();
-    $highestID = $result->formID;
-    return $highestID+1;
-}
-
-public function getText()
+    // Get incremented formID
+    public function getNextFormID(){
+        $query = $this->db->table('fields')->selectMax('formID')->get();
+        $result = $query->getRow();
+        $highestID = $result->formID;
+        return $highestID+1;
+    }
+    // Get Text Field Attributes
+    public function getText()
     {
         $attributes=[
             'type' => 'text',
@@ -76,12 +77,13 @@ public function getText()
         return $attributes;
     }
 
+    // Get Dropdown Field Attributes
     public function getDropdown()
     {
         // Add attributes for dropdown
 
     }
-
+    // Get Checkbox Field Attributes
     public function getCheckbox()
     {
         // Add attributes for Checkbox
