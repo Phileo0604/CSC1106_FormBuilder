@@ -6,8 +6,10 @@
     <!-- Bootstrap JS (Popper.js and Bootstrap) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
+<br>
     <div class="container">
         <br><br>
     <h1>Create Form</h1>
@@ -18,13 +20,13 @@
             <div class="card-body">
                 <ul class="nav nav-tabs">
                 <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#tab1">Tab 1</a>
+                <a class="nav-link active" data-bs-toggle="tab" href="#tab1">Text</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#tab2">Tab 2</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#tab2">Dropdown</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#tab3">Tab 3</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#tab3">Checkbox</a>
                 </li>
             </ul>
                 
@@ -63,7 +65,7 @@
                 <form method="POST" action="<?= base_url('/create') ?>">
                     <?= csrf_field() ?>
                     <!-- Form inputs for DropDown -->
-                    <button type="submit" class="btn btn-primary" name="fieldType" value="text">Add</button>
+                    <button type="submit" class="btn btn-primary" name="fieldType" value="dropdown">Add</button>
                     <button type="submit" class="btn btn-primary" name="save" value="save">Save</button>
                 </form>
                 </div>
@@ -71,7 +73,7 @@
                 <form method="POST" action="<?= base_url('/create') ?>">
                     <?= csrf_field() ?>
                     <!-- Form inputs for CheckBox -->
-                    <button type="submit" class="btn btn-primary" name="fieldType" value="text">Add</button>
+                    <button type="submit" class="btn btn-primary" name="fieldType" value="checkbox">Add</button>
                     <button type="submit" class="btn btn-primary" name="save" value="save">Save</button>
                 </form>
                 </div>

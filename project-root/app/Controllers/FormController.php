@@ -49,9 +49,7 @@ class FormController extends BaseController
         }
         // Build the form and store the form html in $form
         $form = $formRenderer->buildForm($fieldData);
-        print_r($fieldData);
         $fields = $formRenderer->getText();
-        print_r($fields);
         // Check for post request
         if (!$this->request->is('post')) {
             return view('createForm', ['form' => $form, 'nextFormID' => $nextFormID, 'fields' => $fields]);
@@ -74,7 +72,6 @@ class FormController extends BaseController
         ];
         // Execute selected action
         if ($fieldType === 'text'){
-            print_r("hello");
             $fieldData[] = $fields;
         }else if($fieldType ==='dropdown'){
             // Code for dropdown
@@ -84,7 +81,9 @@ class FormController extends BaseController
             
         }
         else if($save === 'save'){
+
             // Set formID of current fieldData
+            
             foreach ($fieldData as &$field) {
                 $field['formId'] = $formRenderer->getNextFormID();
             }
