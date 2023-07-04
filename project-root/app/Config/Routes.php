@@ -35,9 +35,11 @@ use App\Controllers\Login;
 use App\Controllers\Register;
 use App\Controllers\ResetPassword;
 
-$routes->match(['get', 'post'], 'account/reset', [ResetPassword::class, 'reset']);
-$routes->match(['get', 'post'], 'account/login', [Login::class, 'login']);
-$routes->match(['get', 'post'], 'account/register', [Register::class, 'create']);
+//Signup
+$routes->match(['get', 'post'], '/signup', 'SignupController::store');
+$routes->match(['get', 'post'], '/signin', 'SigninController::loginAuth');
+$routes->match(['get', 'post'], '/reset', 'ResetController::reset');
+$routes->match(['get', 'post'], '/profile', 'ProfileController::index', ['filter' => 'authGuard']);
 $routes->get('form', [FormController::class, 'index']);
 $routes->get('test', [FormController::class, 'test']);
 

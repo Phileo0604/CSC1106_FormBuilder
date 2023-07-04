@@ -1,7 +1,7 @@
 <?= session()->getFlashdata('error') ?>
 <?= validation_list_errors() ?>
 
-<form action="/account/reset" method="post">
+<form action="/reset" method="post">
 <?= csrf_field() ?>
     <label for="email">Email</label>
     <input type="text" name="email" placeholder="Email" required>
@@ -17,11 +17,11 @@
     <br>
 
     <label for="security_answer">Answer</label>
-    <input type="input" name="security_answer" required value="<?= set_value('security_answer') ?>">
+    <input type="input" name="security_answer" value="<?= set_value('security_answer') ?>">
     <br>
 
     <label for="password">New password</label>
-    <input type="password" name="password" required value="<?= set_value('password') ?>">
+    <input type="password" name="password" value="<?= set_value('password') ?>">
     <br>
 
     <input type="submit" name="submit" value="Reset Password">
