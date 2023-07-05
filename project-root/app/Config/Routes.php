@@ -4,6 +4,8 @@ namespace Config;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
+service('auth')->routes($routes);
+
 
 /*
  * --------------------------------------------------------------------
@@ -29,20 +31,17 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+
 use App\Controllers\FormController;
 use App\Controllers\Login;
 use App\Controllers\Register;
 use App\Controllers\ResetPassword;
+$routes->get('/', 'Home::index');
 
-//Signup
-$routes->match(['get', 'post'], '/signup', 'SignupController::store');
-$routes->match(['get', 'post'], '/signin', 'SigninController::loginAuth');
-$routes->match(['get', 'post'], '/reset', 'ResetController::reset');
-$routes->match(['get', 'post'], '/profile', 'ProfileController::index', ['filter' => 'authGuard']);
 $routes->get('form', [FormController::class, 'index']);
 $routes->get('test', [FormController::class, 'test']);
 
+service('auth')->routes($routes);
 /*
  * --------------------------------------------------------------------
  * Additional Routing
