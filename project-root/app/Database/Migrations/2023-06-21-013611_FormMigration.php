@@ -72,6 +72,9 @@ class FormMigration extends Migration
             'formName' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
+            ],
+            'formHTML' => [
+                'type' => 'TEXT',
             ]
         ]);
 

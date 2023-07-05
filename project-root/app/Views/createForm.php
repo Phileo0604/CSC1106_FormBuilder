@@ -86,7 +86,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Form Preview</h5>
-                        <?= $form ?>
+                        <?= $html ?>
                     </div>
                 </div>
             </div>

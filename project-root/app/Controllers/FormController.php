@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Libraries\FormBuilder;
 use App\Libraries\FormRenderer;
+use App\Libraries\FormGenerator;
+use App\Libraries\Form;
 use Config\Database;
 use CodeIgniter\Controller;
 class FormController extends BaseController
@@ -21,16 +23,36 @@ class FormController extends BaseController
             
         }
 
+    public function view($slug = null)
+    {
+        $db = Database::connect();
+        $formBuilder = new FormBuilder($db);
+        $formHTML = new Form();
+        $form = $formBuilder->buildForm($slug);
+
         
-    private $fieldData;
-        public function view($slug = null)
-        {
-            $db = Database::connect();
-            $formBuilder = new FormBuilder($db);
-            $form = $formBuilder->buildForm($slug);
-            print_r($fieldData);
-            return view('viewForm', ['form' => $form]);
+        $html = '';
+        $serializedHTML = '';
+        $html .= $formHTML->form1();
+        $model = model(FormModel::class);
+        $serializeHTML = serialize($html);
+        // Update the forms table
+        $formData = [
+            'fieldID' => 1,
+            'userID' => 2,
+            'formName' => 'Example Form',
+            'formHTML' => $serializeHTML,
+        ];
+        $model->update(1, $formData);
+
+        $formData = $model->find(1);
+        if ($formData) {
+            $serializedHTML = $formData['formHTML'];
+            $unserializedHTML = unserialize($serializedHTML);
         }
+
+        return view('viewForm', ['form' => $form, 'html' => $unserializedHTML]);
+    }
 
     
     public function create()
@@ -39,6 +61,7 @@ class FormController extends BaseController
         $db = Database::connect();
         // Initialize FormRenderer library
         $formRenderer = new FormRenderer($db);
+        $FormGenerator = new FormGenerator($db);
         // Check if the field data is already stored in the session
         $fieldData = session()->get('fieldData');
         $nextFormID = $formRenderer->getNextFormID();
@@ -46,13 +69,14 @@ class FormController extends BaseController
         if (!$fieldData) {
             // If not stored in the session, initialize the field data
             $fieldData = [];
+            $html='';
         }
         // Build the form and store the form html in $form
         $form = $formRenderer->buildForm($fieldData);
         $fields = $formRenderer->getText();
         // Check for post request
         if (!$this->request->is('post')) {
-            return view('createForm', ['form' => $form, 'nextFormID' => $nextFormID, 'fields' => $fields]);
+            return view('createForm', ['form' => $form, 'nextFormID' => $nextFormID, 'fields' => $fields, 'html'=>$html]);
         }
         // Initialize model
         $model = model(FieldModel::class);
@@ -72,7 +96,8 @@ class FormController extends BaseController
         ];
         // Execute selected action
         if ($fieldType === 'text'){
-            $fieldData[] = $fields;
+            // $fieldData[] = $fields;
+            $html .= $FormGenerator->textbox('poopy poo', 10, 'col-md-6', 'form-control');
         }else if($fieldType ==='dropdown'){
             // Code for dropdown
         }
@@ -96,8 +121,7 @@ class FormController extends BaseController
         // Store the updated field data in the session
         session()->set('fieldData', $fieldData);
         $form = $formRenderer->buildForm($fieldData);
-        
-        return view('createForm', ['form' => $form, 'nextFormID' => $nextFormID, 'fields'=>$fields]);
+        return view('createForm', ['form' => $form, 'nextFormID' => $nextFormID, 'fields'=>$fields, 'html'=>$html]);
     }
     
 
