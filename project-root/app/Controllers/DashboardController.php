@@ -1,22 +1,34 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\FormModel;
+use App\Models\UserModel;
 
-use App\Models\NewsRecordModel;
-
-class NewsRecord extends BaseController
+class DashboardController extends BaseController
 {
+    // forms list
     public function index()
     {
-        $model = model(NewsRecordModel::class);
 
+        $usersModel = new UserModel();
+        $loggedUserID = session()->get('loggedUser');
+        $userInfo = $usersModel->find($loggedUserID);
         $data = [
-            'news'  => $model->getid(),
-            'title' => 'News archive',
+            'title'=>'Dashboard',
+            'usrInfo'=>$userInfo
         ];
 
-        return view('templates/header', $data)
-            . view('newsrecord/index')
-            . view('templates/footer');
+        $formModel = new FormModel();
+        $data['forms'] = $formModel->orderBy('id', 'DESC')->findAll();
+        return view('/Dashboard/index', $data);
+
     }
+
+    // delete user
+    public function delete($id = null){
+        $formModel = new FormModel();
+        $formModel->where('id', $id)->delete($id);
+        return $this->response->redirect(site_url('/dashboard'));
+    }  
+
 }
