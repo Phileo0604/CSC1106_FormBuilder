@@ -4,11 +4,14 @@ namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
 use App\Libraries\Hash;
-use App\Controllers\AuthController;
-use App\Models\UserModel;
+
 
 class UserSeeder extends Seeder
 {
+    public function __construct() {
+        $this->db = db_connect();
+        helper('token');
+    }
     public function run()
     {
         $data = [
@@ -17,7 +20,7 @@ class UserSeeder extends Seeder
                 'email'      => 'tim@gmail.com',
                 'password'   => Hash::make('12345'),
                 // Add token generation for uuid
-                'uuid'       => null,
+                'uuid'       => generateToken(),
                 'updated_at' => null,
             ],
             [
@@ -25,7 +28,7 @@ class UserSeeder extends Seeder
                 'email'      => 'kaiyang@gmail.com',
                 'password'   => Hash::make('12345'),
                 // Add token generation for uuid
-                'uuid'       => null,
+                'uuid'       => generateToken(),
                 'updated_at' => null,
             ],
             // Add more user data as needed
