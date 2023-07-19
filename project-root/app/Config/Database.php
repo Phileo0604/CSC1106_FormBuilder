@@ -27,9 +27,9 @@ class Database extends Config
     public array $default = [
         'DSN'      => '',
         'hostname' => 'localhost',
-        'username' => 'zaw',
-        'password' => 'pw',
-        'database' => 'form_builder',
+        'username' => '',
+        'password' => '',
+        'database' => 'ci4formdb',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,

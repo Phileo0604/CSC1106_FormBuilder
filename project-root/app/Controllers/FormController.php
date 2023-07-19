@@ -6,6 +6,9 @@ use App\Libraries\FormBuilder;
 use App\Libraries\FormRenderer;
 use App\Libraries\FormGenerator;
 use App\Libraries\Form;
+
+use App\Models\FormModel;
+use App\Models\UserModel;
 use Config\Database;
 use CodeIgniter\Controller;
 class FormController extends BaseController
@@ -25,33 +28,30 @@ class FormController extends BaseController
 
     public function view($slug = null)
     {
-        $db = Database::connect();
-        $formBuilder = new FormBuilder($db);
         $formHTML = new Form();
-        $form = $formBuilder->buildForm($slug);
+        $loggedUserID = session()->get('loggedUser');
 
-        
         $html = '';
         $serializedHTML = '';
+        $unserializedHTML = '';
         $html .= $formHTML->form1();
         $model = model(FormModel::class);
         $serializeHTML = serialize($html);
         // Update the forms table
         $formData = [
-            'fieldID' => 1,
-            'userID' => 2,
+            'userID' => $loggedUserID,
             'formName' => 'Example Form',
             'formHTML' => $serializeHTML,
         ];
+        $model->save($formData);
         $model->update(1, $formData);
-
         $formData = $model->find(1);
         if ($formData) {
             $serializedHTML = $formData['formHTML'];
             $unserializedHTML = unserialize($serializedHTML);
         }
 
-        return view('viewForm', ['form' => $form, 'html' => $unserializedHTML]);
+        return view('viewForm', ['html' => $unserializedHTML]);
     }
 
     

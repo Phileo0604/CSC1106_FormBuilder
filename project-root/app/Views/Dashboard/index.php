@@ -52,15 +52,14 @@
           <?php if($forms): ?>
           <?php foreach($forms as $form): ?>
           <tr>
-             <td><?php echo $form['title']; ?></td>
-             <td><?php echo $form['created_at']; ?></td>
+             <td><?php echo $form['formName']; ?></td>
              <td>
    
-               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#updateModal" onclick="openModal(<?php echo $form['id']; ?>)">Update</button>
+               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#updateModal" onclick="openModal(<?php echo $form['formID']; ?>)">Update</button>
                 <span style="margin-right: 10px;"></span>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal" onclick="openModal(<?php echo $form['id']; ?>)">Delete</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal" onclick="openModal(<?php echo $form['formID']; ?>)">Delete</button>
                 <span style="margin-right: 10px;"></span>
-                  <a href="<?= site_url('/view/' . $form['id']) ?>">
+                  <a href="<?= site_url('/view/' . $form['formID']) ?>">
                      <button type="button" class="btn btn-danger">View</button>
                   </a>
             </td>        

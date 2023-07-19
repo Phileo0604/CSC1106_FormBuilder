@@ -13,7 +13,7 @@ class DashboardController extends BaseController
         $loggedUserID = session()->get('loggedUser');
         
         $formModel = new FormModel();
-        $data['forms'] = $formModel->where('userId', $loggedUserID)->orderBy('id', 'DESC')->findAll();
+        $data['forms'] = $formModel->where('userID', $loggedUserID)->orderBy('formID', 'DESC')->findAll();
         return view('/Dashboard/index', $data);
 
     }
@@ -23,7 +23,7 @@ class DashboardController extends BaseController
     // delete user
     public function delete($id = null){
         $formModel = new FormModel();
-        $formModel->where('id', $id)->delete($id);
+        $formModel->where('formID', $id)->delete($id);
         return $this->response->redirect(site_url('/dashboard'));
     }  
 

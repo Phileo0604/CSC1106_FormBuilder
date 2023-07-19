@@ -8,39 +8,26 @@ class FormSeeder extends Seeder
 {
     public function run()
     {
-        $formData = [
+        $data = [
             [
-                'type' => 'text',
-                'id' => 'fullname',
-                'size' => 30,
-                'placeholder' => 'Enter your full name',
-                'required' => true,
+                'userID' => 1,
+                'formName' => 'Form 1',
+                'formHTML' => 's:457:"<h1 class="col-md-12">Form title</h1><div class="vertical-line col-md-6"><label for="texty poo">texty poo</label><br><input type="text" id="texty poo" class="form-control"></div><div class="vertical-line col-md-1"><label for="checky box">checky box</label><br><input type="checkbox" id="checky box"></div><div class="vertical-line col-md-1"><label for="radio">radio</label><br><input type="radio" id="radio"></div><p class="col-md-12">this is some texty</p>";'
             ],
             [
-                'type' => 'email',
-                'id' => 'email',
-                'size' => 40,
-                'placeholder' => 'Enter your email address',
-                'required' => true,
+                'userID' => 1,
+                'formName' => 'Form 2',
+                'formHTML' => 's:457:"<h1 class="col-md-12">Form title</h1><div class="vertical-line col-md-6"><label for="texty poo">texty poo</label><br><input type="text" id="texty poo" class="form-control"></div><div class="vertical-line col-md-1"><label for="checky box">checky box</label><br><input type="checkbox" id="checky box"></div><div class="vertical-line col-md-1"><label for="radio">radio</label><br><input type="radio" id="radio"></div><p class="col-md-12">this is some texty</p>";'
             ],
             [
-                'type' => 'password',
-                'id' => 'password',
-                'size' => 20,
-                'placeholder' => 'Enter your password',
-                'required' => true,
+                'userID' => 2,
+                'formName' => 'Form 3',
+                'formHTML' => 's:457:"<h1 class="col-md-12">Form title</h1><div class="vertical-line col-md-6"><label for="texty poo">texty poo</label><br><input type="text" id="texty poo" class="form-control"></div><div class="vertical-line col-md-1"><label for="checky box">checky box</label><br><input type="checkbox" id="checky box"></div><div class="vertical-line col-md-1"><label for="radio">radio</label><br><input type="radio" id="radio"></div><p class="col-md-12">this is some texty</p>";'
             ],
-            [
-                'type' => 'textarea',
-                'id' => 'message',
-                'size' => 100,
-                'placeholder' => 'Enter your message',
-                'required' => false,
-            ],
+            // Add more mock data as needed
         ];
 
-        foreach ($formData as $data) {
-            $this->db->table('form')->insert($data);
-        }
+        // Insert the data into the 'fields' table
+        $this->db->table('forms')->insertBatch($data);
     }
 }

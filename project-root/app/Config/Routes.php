@@ -2,6 +2,7 @@
 
 namespace Config;
 use App\Controllers\AuthController;
+use App\Controllers\FormController;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
@@ -87,3 +88,4 @@ $routes->match(['get', 'post'], 'view/(:segment)', [FormController::class, 'view
 if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
+    
