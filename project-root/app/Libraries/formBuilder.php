@@ -14,9 +14,11 @@ class FormBuilder
         $this->db = $db;
     }
 
-    public function buildForm()
+    public function buildForm($formID)
     {
-        $builder = $this->db->table('form');
+        // get userid
+        // from user id > get formid
+        $builder = $this->db->table('fields')->where('formID', $formID);
         $fields = $builder->get()->getResultArray();
 
         $html = '<form>';
@@ -32,29 +34,29 @@ class FormBuilder
     }
 
     protected function buildField($field)
-{
-    $html = '<div>';
+    {
+        $html = '<div>';
 
-    $attributes = [
-        'type' => $field['type'],
-        'id' => $field['id'],
-        'size' => $field['size'],
-        'placeholder' => $field['placeholder'],
-        'required' => $field['required'],
-    ];
+        $attributes = [
+            'type' => $field['type'],
+            'id' => $field['fieldID'],
+            'size' => $field['size'],
+            'placeholder' => $field['placeholder'],
+            'required' => $field['required'],
+        ];
 
-    $inputTag = '<input';
-    foreach ($attributes as $name => $value) {
-        if (!empty($value)) {
-            $inputTag .= ' ' . $name . '="' . $value . '"';
+        $inputTag = '<input';
+        foreach ($attributes as $name => $value) {
+            if (!empty($value)) {
+                $inputTag .= ' ' . $name . '="' . $value . '"';
+            }
         }
+        $inputTag .= '>';
+
+        $html .= $inputTag;
+        $html .= '</div>';
+
+        return $html;
     }
-    $inputTag .= '>';
-
-    $html .= $inputTag;
-    $html .= '</div>';
-
-    return $html;
-}
-
+    
 }

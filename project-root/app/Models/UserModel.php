@@ -1,46 +1,73 @@
-<?php
-
+<?php 
 namespace App\Models;
-
 use CodeIgniter\Model;
-
+use DateTime;
+use DateTimeZone;
 class UserModel extends Model
 {
-    protected $table            = 'users';
-    protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
-    protected $allowedFields    = [
-        'name',
-        'email',
-        'password',
-        'created_at',
-        'security_question',
-        'security_answer',
-    ];
+    protected $table = 'users';
+    protected $primaryKey = 'id';
+     
+    protected $allowedFields = ['id','email', 'name', 'password', 'updated_at', 'uuid'];
 
-    // // Dates
-    // protected $useTimestamps = false;
-    // protected $dateFormat    = 'datetime';
-    // protected $createdField  = 'created_at';
-    // protected $updatedField  = 'updated_at';
-    // protected $deletedField  = 'deleted_at';
-
-    public function getId($id = false)
+    function updatedAt($id) 
     {
-        if ($id === false) {
-            return $this->findAll();
-        }
+       $user = $this->where('id', $id)->first();
+       if ($user) {
+        $currentTimestamp = $this->db->query("SELECT CURRENT_TIMESTAMP() as `current_time`")->getRow()->current_time;
+        $user['updated_at'] = $currentTimestamp;
+        $this->save($user);
 
-        return $this->where(['id' => $id])->first();
+        return true;
+    }
+    return false;
     }
 
-    public function getEmail($email = false)
+    function isVerifyToken($token)
     {
-        if ($email === false) {
-            return $this->findAll();
-        }
+        $user = $this->where('uuid', $token)->first();
 
-        return $this->where(['email' => $email])->first();
+        if ($user)
+        {
+            return true;
+        }
+        return false;
     }
+
+    function isTokenExpired($token)
+    {
+        $user = $this->where('uuid', $token)->first();
+        
+        if ($user) {
+            $timezone = new DateTimeZone('Asia/Singapore'); // Replace with your desired timezone
+            $currentTimestamp = new DateTime('now', $timezone);
+            $updatedTimestamp = new DateTime($user['updated_at'], $timezone);
+            $difference = $currentTimestamp->diff($updatedTimestamp);
+    
+            if ($difference-> i > 60) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // function isSetResetToken($email)
+    // {
+    //     $user = $this->where('email', $email)->first();
+        
+
+    //     if ($user) {
+    //         $user['uuid'] = generateToken();
+    //         $this->update($user['id'], $user);
+        
+    //         return true;
+    //     }
+
+    //     return false;
+
+    // }
+
+      
+    
 
 }

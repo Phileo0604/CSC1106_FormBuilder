@@ -1,9 +1,13 @@
 <?php
 
 namespace Config;
+use App\Controllers\AuthController;
+use App\Controllers\FormController;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
+
+
 
 /*
  * --------------------------------------------------------------------
@@ -27,21 +31,46 @@ $routes->set404Override();
  * --------------------------------------------------------------------
  */
 
+
+
+
+
+
+
+ // by filter AuthCheck, only those with session can access these routes
+ $routes->group('', ['filter'=> 'AuthCheck'], function($routes){
+    $routes->get('/dashboard','DashboardController::index');
+    $routes->get('delete/(:num)', 'DashboardController::delete/$1');
+    $routes->get('signout', 'AuthController::logout');
+ });
+
+ // by filter AlreadyLoggedIn, only those without session can access these routes
+ $routes->group('', ['filter'=> 'AlreadyLoggedIn'], function($routes){
+
+    $routes->get('/', 'AuthController::signin');
+    $routes->get('signin', 'AuthController::signin');
+    $routes->get('signup', 'AuthController::signup');
+    $routes->get('forgotpassword', 'AuthController::forgotpassword');
+    $routes->get('reset_password/(:any)', 'AuthController::resetpassword/$1');
+
+
+    $routes->post('signin/check', 'AuthController::check');
+    $routes->post('signup/save', 'AuthController::save');
+    $routes->post('forgotpassword/check', 'AuthController::forgotpasswordCheck');
+    $routes->post('update/(:any)', 'AuthController::update/$1');
+
+
+ });
+
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
-use App\Controllers\FormController;
-use App\Controllers\Login;
-use App\Controllers\Register;
-use App\Controllers\ResetPassword;
 
-//Signup
-$routes->match(['get', 'post'], '/signup', 'SignupController::store');
-$routes->match(['get', 'post'], '/signin', 'SigninController::loginAuth');
-$routes->match(['get', 'post'], '/reset', 'ResetController::reset');
-$routes->match(['get', 'post'], '/profile', 'ProfileController::index', ['filter' => 'authGuard']);
-$routes->get('form', [FormController::class, 'index']);
+$routes->get('view', [FormController::class, 'view']);
+//$routes->get('create', [FormController::class, 'create']);
+$routes->match(['get', 'post'], 'create', [FormController::class, 'create']);
 $routes->get('test', [FormController::class, 'test']);
+$routes->match(['get', 'post'], 'view/(:segment)', [FormController::class, 'view']);
 
 /*
  * --------------------------------------------------------------------
@@ -59,3 +88,4 @@ $routes->get('test', [FormController::class, 'test']);
 if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
+    
