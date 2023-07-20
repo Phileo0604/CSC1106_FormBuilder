@@ -12,7 +12,6 @@ class Form
     public function form1(){
         $db = Database::connect();
         $FormGenerator = new FormGenerator($db);
-        // Format: text()
         $html="";
 
         $html .= $FormGenerator->title('Form title');

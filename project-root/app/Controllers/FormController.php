@@ -55,7 +55,7 @@ class FormController extends BaseController
     }
 
     
-    public function create()
+    public function create1()
     {
         // Initialize database connection
         $db = Database::connect();
@@ -124,6 +124,11 @@ class FormController extends BaseController
         return view('createForm', ['form' => $form, 'nextFormID' => $nextFormID, 'fields'=>$fields, 'html'=>$html]);
     }
     
+    public function create(){
+        if (!$this->request->is('post')) {
+            return view('createForm');
+        }
+    }
 
     public function test()
     {
