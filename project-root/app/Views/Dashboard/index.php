@@ -44,7 +44,6 @@
        <thead>
           <tr>
              <th>Title</th>
-             <th>Created At</th>
              <th>Action</th>
           </tr>
        </thead>
@@ -53,8 +52,8 @@
           <?php foreach($forms as $form): ?>
           <tr>
              <td><?php echo $form['formName']; ?></td>
+
              <td>
-   
                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#updateModal" onclick="openModal(<?php echo $form['formID']; ?>)">Update</button>
                 <span style="margin-right: 10px;"></span>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal" onclick="openModal(<?php echo $form['formID']; ?>)">Delete</button>
