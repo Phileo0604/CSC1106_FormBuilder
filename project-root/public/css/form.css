@@ -1,0 +1,43 @@
+.vertical-line {
+    border-right: 1px solid #ccc;
+}
+
+.a4-container {
+    border: 1px solid #ccc;
+    /* Border color similar to <hr> */
+    width: 210mm;
+    /* A4 width */
+    height: 297mm;
+    /* A4 height */
+    padding: 10px;
+    /* Optional padding for content */
+    margin: 20px auto;
+    /* Centering the container */
+    overflow: hidden;
+    /* Hide overflowed content */
+}
+
+.field-hover:hover {
+    background-color: lightcyan;
+    /* Very light gray color */
+}
+
+/* Style the "x" icon */
+.close-icon {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Show the "x" icon when the parent div is hovered */
+.parent-div:hover .close-icon {
+    display: block;
+}
+
+/* Add position: relative to the parent div */
+.parent-div {
+    position: relative;
+}

@@ -58,9 +58,14 @@ class FormController extends BaseController
         $db = Database::connect();
         // Initialize FormGenerator library
         $FormGenerator = new FormGenerator($db);
-        // Check if the field data is already stored in the session
+        // Initialize variables
         $html = '';
-
+        $selectedField = ['id'=> ''];
+        $data = [
+            'html'=>$html,
+            'selectedField'=>$selectedField,
+        ];
+        // Check if the field data is already stored in the session
         $fieldData = session()->get('fieldData');
         // Get Login UserID
         $loggedUserID = session()->get('loggedUser');
@@ -70,13 +75,14 @@ class FormController extends BaseController
             // If something in $fieldData, build the form
         } else {
             $html = $FormGenerator->buildForm($fieldData);
+            $data['html'] = $html;
         }
         // Set $nextFormID
         $nextFormID = $FormGenerator->getNextFormID($loggedUserID);
         
         // Check for post request
         if (!$this->request->is('post')) {
-            return view('createForm', ['html' => $html]);
+            return view('createForm', ['data' => $data]);
         }
         // Initialize model
         $model = model(FieldModel::class);
@@ -125,8 +131,9 @@ class FormController extends BaseController
             $fields['fieldHTML'] = serialize($inputHTML);
             $fieldData[] = $fields;
         }
-        // Save form to database
+        // Save button, inserts $fieldData to database
         else if ($action === 'save') {
+            
             // Set FormID and UserID of current field to fieldData
             foreach ($fieldData as &$field) {
                 $field['UserID'] = $loggedUserID;
@@ -138,14 +145,39 @@ class FormController extends BaseController
             }
             $fieldData = [];
             $html = '';
+        }else if ($action === 'delete'){
+            $fieldData = array_values($fieldData);
+            $fieldID = $this->request->getPost('id');
+            unset($fieldData[$fieldID]);
+        }else if ($action === 'edit'){
+            $fieldData = array_values($fieldData);
+            $fieldID = $this->request->getPost('id');
+            $selectedField = $fieldData[$fieldID];
+            $selectedField['id'] = $fieldID;
+        }else if($action === 'update'){
+            $updatedInput = $this->request->getPost(['fieldType', 'labelText', 'inputClass', 'divClass', 'selectedFieldID']);
+            $currentField = $fieldData[$updatedInput['selectedFieldID']];
+            // print_r($currentField);
+            $updatedField = [
+                'FieldType' => $currentField['FieldType'],
+                'LabelText' => $updatedInput['labelText'],
+                'InputClass' => $updatedInput['inputClass'],
+                'DivClass' => $updatedInput['divClass'],
+            ];
+            $fieldData[$updatedInput['selectedFieldID']] = $updatedField;
+            $html = $FormGenerator->buildForm($fieldData);
+            
         }
 
         // Store the updated field data in the session
+        // $fieldData=[];
         session()->set('fieldData', $fieldData);
         // Build the form
         $html = $FormGenerator->buildForm($fieldData);
-        // $form = $FormGenerator->buildForm($fieldData);
-        return view('createForm', ['html' => $html]);
+        $data['html'] = $html;
+        $data['selectedField'] = $selectedField;
+        //print_r($selectedField);
+        return view('createForm', ['data' => $data]);
     }
 
     public function update($slug=null)
