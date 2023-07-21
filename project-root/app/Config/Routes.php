@@ -1,6 +1,7 @@
 <?php
 
 namespace Config;
+
 use App\Controllers\AuthController;
 use App\Controllers\FormController;
 
@@ -37,39 +38,37 @@ $routes->set404Override();
 
 
 
- // by filter AuthCheck, only those with session can access these routes
- $routes->group('', ['filter'=> 'AuthCheck'], function($routes){
-    $routes->get('/dashboard','DashboardController::index');
-    $routes->get('delete/(:num)', 'DashboardController::delete/$1');
-    $routes->get('signout', 'AuthController::logout');
- });
+// by filter AuthCheck, only those with session can access these routes
+$routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
+   $routes->get('/dashboard', 'DashboardController::index');
+   $routes->get('delete/(:num)', 'DashboardController::delete/$1');
+   $routes->get('signout', 'AuthController::logout');
+});
 
- // by filter AlreadyLoggedIn, only those without session can access these routes
- $routes->group('', ['filter'=> 'AlreadyLoggedIn'], function($routes){
+// by filter AlreadyLoggedIn, only those without session can access these routes
+$routes->group('', ['filter' => 'AlreadyLoggedIn'], function ($routes) {
 
-    $routes->get('/', 'AuthController::signin');
-    $routes->get('signin', 'AuthController::signin');
-    $routes->get('signup', 'AuthController::signup');
-    $routes->get('forgotpassword', 'AuthController::forgotpassword');
-    $routes->get('reset_password/(:any)', 'AuthController::resetpassword/$1');
-
-
-    $routes->post('signin/check', 'AuthController::check');
-    $routes->post('signup/save', 'AuthController::save');
-    $routes->post('forgotpassword/check', 'AuthController::forgotpasswordCheck');
-    $routes->post('update/(:any)', 'AuthController::update/$1');
+   $routes->get('/', 'AuthController::signin');
+   $routes->get('signin', 'AuthController::signin');
+   $routes->get('signup', 'AuthController::signup');
+   $routes->get('forgotpassword', 'AuthController::forgotpassword');
+   $routes->get('reset_password/(:any)', 'AuthController::resetpassword/$1');
 
 
- });
+   $routes->post('signin/check', 'AuthController::check');
+   $routes->post('signup/save', 'AuthController::save');
+   $routes->post('forgotpassword/check', 'AuthController::forgotpasswordCheck');
+   $routes->post('update/(:any)', 'AuthController::update/$1');
+});
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+// Form CRUD routes
 $routes->get('view', [FormController::class, 'view']);
-//$routes->get('create', [FormController::class, 'create']);
 $routes->match(['get', 'post'], 'create', [FormController::class, 'create']);
-$routes->get('test', [FormController::class, 'test']);
+$routes->match(['get', 'post'], 'update/(:segment)', [FormController::class, 'update']);
 $routes->match(['get', 'post'], 'view/(:segment)', [FormController::class, 'view']);
 
 /*
@@ -86,6 +85,5 @@ $routes->match(['get', 'post'], 'view/(:segment)', [FormController::class, 'view
  * needing to reload it.
  */
 if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
-    require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
+   require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
-    

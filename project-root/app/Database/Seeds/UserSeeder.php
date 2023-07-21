@@ -8,7 +8,8 @@ use App\Libraries\Hash;
 
 class UserSeeder extends Seeder
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = db_connect();
         helper('token');
     }

@@ -22,9 +22,10 @@
             border-right: 1px solid #ccc;
         }
     </style>
-
 <body>
     <br>
+    <form action="<?= base_url('/') ?>">
+    </form>
     <div class="row" id="container">
         <?= $html ?>
     </div>
