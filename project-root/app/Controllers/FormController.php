@@ -148,7 +148,7 @@ class FormController extends BaseController
         return view('createForm', ['html' => $html]);
     }
 
-    public function update()
+    public function update($slug=null)
     {
         return view('update');
     }
