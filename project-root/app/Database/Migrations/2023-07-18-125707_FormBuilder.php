@@ -8,8 +8,6 @@ class FormBuilder extends Migration
 {
     public function up()
     {
-        // $this->forge->dropTable('forms');
-        // $this->forge->dropTable('users');
         //Forms Table
         $this->forge->addField([
             'formID' => [
@@ -71,14 +69,53 @@ class FormBuilder extends Migration
 
         $this->forge->addKey('id', true);
         $this->forge->createTable('users');
-        // $seeder = \Config\Database::seeder();
-        // $seeder->call('UserSeeder');
-    }   
+        $seeder = \Config\Database::seeder();
+        $seeder->call('UserSeeder');
+
+        //Fields Table
+        $this->forge->addField([
+            'FieldID' => [
+                'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => true,
+                'auto_increment' => true,
+            ],
+            'FieldType' => [
+                'type' => 'VARCHAR',
+                'constraint' => '100',
+            ],
+            'LabelText' => [
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'InputClass' => [
+                'type' => 'VARCHAR',
+                'constraint' => '100',
+            ],
+            'DivClass' => [
+                'type' => 'VARCHAR',
+                'constraint' => '100',
+            ],
+            'fieldHTML' => [
+                'type' => 'TEXT',
+            ],
+            'UserID' => [
+                'type' => 'INT',
+            ],
+            'FormID' => [
+                'type' => 'INT',
+            ],
+        ]);
+
+        $this->forge->addPrimaryKey('FieldID');
+        $this->forge->createTable('form_fields');
+    }
 
     public function down()
     {
         //
         $this->forge->dropTable('forms');
         $this->forge->dropTable('users');
+        $this->forge->dropTable('form_fields');
     }
 }

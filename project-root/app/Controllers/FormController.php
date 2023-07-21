@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Libraries\FormBuilder;
-use App\Libraries\FormRenderer;
 use App\Libraries\FormGenerator;
 use App\Libraries\Form;
 
@@ -11,31 +9,28 @@ use App\Models\FormModel;
 use App\Models\UserModel;
 use Config\Database;
 use CodeIgniter\Controller;
+
 class FormController extends BaseController
 {
-    
-    // protected $formbuilder;
-    // public function __construct()
-    // {
-    //     parent::__construct();s
-    //     $this->formbuilder = new FormBuilder();
-    // }
-    
     public function index()
-        {
-            
-        }
+    {
+    }
 
     public function view($slug = null)
     {
+        // Initiate form.php
         $formHTML = new Form();
+        // Get current UserID
         $loggedUserID = session()->get('loggedUser');
-
+        // Initialize the HTML variables
         $html = '';
         $serializedHTML = '';
         $unserializedHTML = '';
+        // Append form to $html
         $html .= $formHTML->form1();
+        // Initialize Form Model
         $model = model(FormModel::class);
+        // Serialize the form HTML
         $serializeHTML = serialize($html);
         // Update the forms table
         $formData = [
@@ -43,9 +38,11 @@ class FormController extends BaseController
             'formName' => 'Example Form',
             'formHTML' => $serializeHTML,
         ];
-        $model->save($formData);
-        $model->update(1, $formData);
-        $formData = $model->find(1);
+        // $model->save($formData);
+        // Update Form according to FormID
+        $model->update($slug, $formData);
+        // Get form with FormID and unserialize it
+        $formData = $model->find($slug);
         if ($formData) {
             $serializedHTML = $formData['formHTML'];
             $unserializedHTML = unserialize($serializedHTML);
@@ -54,79 +51,105 @@ class FormController extends BaseController
         return view('viewForm', ['html' => $unserializedHTML]);
     }
 
-    
+
     public function create()
     {
         // Initialize database connection
         $db = Database::connect();
-        // Initialize FormRenderer library
-        $formRenderer = new FormRenderer($db);
+        // Initialize FormGenerator library
         $FormGenerator = new FormGenerator($db);
         // Check if the field data is already stored in the session
+        $html = '';
+
         $fieldData = session()->get('fieldData');
-        $nextFormID = $formRenderer->getNextFormID();
-        //print_r($formRenderer->getText());
+        // Get Login UserID
+        $loggedUserID = session()->get('loggedUser');
+        // If not stored in the session, initialize the field data
         if (!$fieldData) {
-            // If not stored in the session, initialize the field data
             $fieldData = [];
-            $html='';
+            // If something in $fieldData, build the form
+        } else {
+            $html = $FormGenerator->buildForm($fieldData);
         }
-        // Build the form and store the form html in $form
-        $form = $formRenderer->buildForm($fieldData);
-        $fields = $formRenderer->getText();
+        // Set $nextFormID
+        $nextFormID = $FormGenerator->getNextFormID($loggedUserID);
+        
         // Check for post request
         if (!$this->request->is('post')) {
-            return view('createForm', ['form' => $form, 'nextFormID' => $nextFormID, 'fields' => $fields, 'html'=>$html]);
+            return view('createForm', ['html' => $html]);
         }
         // Initialize model
         $model = model(FieldModel::class);
 
         // Get POST request
-        $fieldInput = $this->request->getPost(['type', 'size', 'placeholder', 'required', 'label']);
-        $fieldType = $this->request->getPost('fieldType');
-        $save = $this->request->getPost('save');
-        // Store input into fieldsArray
+        $fieldInput = $this->request->getPost(['fieldType', 'labelText', 'inputClass', 'divClass']);
+        $action = $this->request->getPost('action');
+        // Store input into fields array, this array will be appended to $fieldData
         $fields = [
-            'type' => $fieldInput['type'],
-            'size' => $fieldInput['size'],
-            'placeholder' => $fieldInput['placeholder'],
-            'required' => $fieldInput['required'],
-            'label' => $fieldInput['label'],
-            'formID' => $formRenderer->getNextFormID(),
+            'FieldType' => $fieldInput['fieldType'],
+            'LabelText' => $fieldInput['labelText'],
+            'InputClass' => $fieldInput['inputClass'],
+            'DivClass' => $fieldInput['divClass'],
         ];
-        // Execute selected action
-        if ($fieldType === 'text'){
-            // $fieldData[] = $fields;
-            $html .= $FormGenerator->textbox('poopy poo', 10, 'col-md-6', 'form-control');
-        }else if($fieldType ==='dropdown'){
-            // Code for dropdown
-        }
-        else if($fieldType === 'checkbox'){
-            // Code for checkbox
-            
-        }
-        else if($save === 'save'){
 
-            // Set formID of current fieldData
-            
-            foreach ($fieldData as &$field) {
-                $field['formId'] = $formRenderer->getNextFormID();
-            }
-            // Insert fields to fields table
-            $model->insertFields($fieldData);
-            $fieldData = [];
-            session_destroy();
+        // Execute selected action
+        // Add Title
+        if ($fieldInput['fieldType'] === 'title') {
+            $inputHTML = $FormGenerator->text($fieldInput['labelText']);
+            $fields['fieldHTML'] = serialize($inputHTML);
+            $fieldData[] = $fields;
         }
-        
+        // Add Textbox
+        else if ($fieldInput['fieldType'] === 'textBox') {
+            $inputHTML = $FormGenerator->textbox($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
+            $fields['fieldHTML'] = serialize($inputHTML);
+            $fieldData[] = $fields;
+        // Add Checkbox
+        } else if ($fieldInput['fieldType'] === 'checkbox') {
+            $inputHTML = $FormGenerator->checkbox($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
+            $fields['fieldHTML'] = serialize($inputHTML);
+            $fieldData[] = $fields;
+        // Add Dropdown (Not complete)
+        } else if ($fieldInput['fieldType'] === 'dropdown') {
+            // $inputHTML=$FormGenerator->dropdown($fieldInput['labelText'], null, $fieldInput['divClass'], $fieldInput['inputClass']);
+            // $fields['fieldHTML'] = serialize($inputHTML);
+            // $fieldData[] = $fields;
+            // Add Radio
+        } else if ($fieldInput['fieldType'] === 'radio') {
+            $inputHTML = $FormGenerator->radio($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
+            $fields['fieldHTML'] = serialize($inputHTML);
+            $fieldData[] = $fields;
+        // Add Plain Text
+        } else if ($fieldInput['fieldType'] === 'text') {
+            $inputHTML = $FormGenerator->text($fieldInput['labelText']);
+            $fields['fieldHTML'] = serialize($inputHTML);
+            $fieldData[] = $fields;
+        }
+        // Save form to database
+        else if ($action === 'save') {
+            // Set FormID and UserID of current field to fieldData
+            foreach ($fieldData as &$field) {
+                $field['UserID'] = $loggedUserID;
+                $field['FormID'] = $nextFormID;
+            }
+            // Save fieldData to database
+            foreach ($fieldData as $data) {
+                $model->insert($data);
+            }
+            $fieldData = [];
+            $html = '';
+        }
+
         // Store the updated field data in the session
         session()->set('fieldData', $fieldData);
-        $form = $formRenderer->buildForm($fieldData);
-        return view('createForm', ['form' => $form, 'nextFormID' => $nextFormID, 'fields'=>$fields, 'html'=>$html]);
+        // Build the form
+        $html = $FormGenerator->buildForm($fieldData);
+        // $form = $FormGenerator->buildForm($fieldData);
+        return view('createForm', ['html' => $html]);
     }
-    
 
-    public function test()
+    public function update()
     {
-        return view('test');
+        return view('update');
     }
 }
