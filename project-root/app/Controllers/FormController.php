@@ -2,14 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Libraries\FormBuilder;
-use App\Libraries\FormRenderer;
-use App\Libraries\FormGenerator;
-use App\Libraries\Form;
-
-use App\Models\FormModel;
-use App\Models\UserModel;
-use App\Libraries\FormRenderer;
 use App\Libraries\FormGenerator;
 use App\Libraries\Form;
 
@@ -66,7 +58,6 @@ class FormController extends BaseController
         // Initialize database connection
         $db = Database::connect();
         // Initialize FormRenderer library
-        $formRenderer = new FormRenderer($db);
         $FormGenerator = new FormGenerator($db);
         // Check if the field data is already stored in the session
         $fieldData = session()->get('fieldData');
@@ -114,7 +105,6 @@ class FormController extends BaseController
         else if($save === 'save'){
 
             // Set formID of current fieldData
-            
             foreach ($fieldData as &$field) {
                 $field['formId'] = $formRenderer->getNextFormID();
             }

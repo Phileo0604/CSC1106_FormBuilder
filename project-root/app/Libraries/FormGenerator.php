@@ -89,7 +89,6 @@ class FormGenerator
             'id' => $label,
             'class' => $inputClass,
         ];
-
         $inputTag = '<input type="text"';
         foreach ($attributes as $name => $value) {
             if (!empty($value)) {
@@ -100,7 +99,6 @@ class FormGenerator
 
         $html .= $inputTag;
         $html .= '</div>';
-
         return $html;
     }
 
