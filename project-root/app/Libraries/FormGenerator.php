@@ -40,8 +40,6 @@ class FormGenerator
     {
         if (!$label)
             $label = 'Name'; // Set default label value
-        if (!$size)
-            $size = 10; // Set default size value
         if (!$divClass)
             $divClass = 'col-md-6'; // Set default divClass value
         if (!$inputClass)
