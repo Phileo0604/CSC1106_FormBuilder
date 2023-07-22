@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="../css/form.css">
 </head>
 
+    <!-- Navbar -->
+    <?php include 'Dashboard/Header/index.php' ?>
+
 <body>
     <br>
     <div class="container">

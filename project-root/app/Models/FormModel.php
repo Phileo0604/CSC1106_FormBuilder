@@ -11,6 +11,7 @@ class FormModel extends Model
     protected $table = 'forms';
     protected $primaryKey = 'formID';
     protected $allowedFields = [
+        'formID',
         'userID',
         'formName',
         'formHTML',
