@@ -82,12 +82,10 @@ class FormController extends BaseController
         }
         // Set $nextFormID
         $nextFormID = $FormGenerator->getNextFormID($loggedUserID);
-        print_r('before');
         // Check for post request
         if (!$this->request->is('post')) {
             return view('createForm', ['data' => $data]);
         }
-        print_r('after');
 
         // Get POST request
         $fieldInput = $this->request->getPost(['fieldType', 'labelText', 'inputClass', 'divClass']);
@@ -149,7 +147,6 @@ class FormController extends BaseController
             $selectedField['id'] = $fieldID;
         } else if ($action === 'update') {
             $updatedInput = $this->request->getPost(['fieldType', 'labelText', 'inputClass', 'divClass', 'selectedFieldID']);
-            // print_r($currentField);
             $updatedField = [
                 'FieldType' => $updatedInput['fieldType'],
                 'LabelText' => $updatedInput['labelText'],
@@ -167,7 +164,6 @@ class FormController extends BaseController
         $html = $FormGenerator->buildForm($fieldData);
         $data['html'] = $html;
         $data['selectedField'] = $selectedField;
-        //print_r($selectedField);
         return view('createForm', ['data' => $data]);
     }
 
@@ -199,17 +195,33 @@ class FormController extends BaseController
         // Initialize variables
         $html = '';
         $selectedField = ['id' => ''];
+        $edited=false;
         $data = [
             'html' => $html,
             'selectedField' => $selectedField,
             'slug' => $slug,
+            'edited' => $edited, 
         ];
+        
         // Check if the field data is already stored in the session
         if (!session()->has('fieldData' . $loggedUserID . $slug)) {
             // Your logic to set the session data goes here
             session()->set('fieldData' . $loggedUserID . $slug, $fieldData);
         }
         $fieldData = session()->get('fieldData'.$loggedUserID . $slug);
+        // Create $defaultData to check if content has been edited
+        $defaultData = $model->findAllByIDs($slug, $loggedUserID);
+        $defaultData = array_values($defaultData);
+        foreach ($defaultData as &$subarray) {
+            unset($subarray['FieldID']);
+        }
+        // Check if content has been edited
+        if($defaultData === $fieldData)
+            $edited = false;
+        else
+            $edited = true;
+        // Set edited value
+        $data['edited'] = $edited;
         // If not stored in the session, initialize the field data
         if (!$fieldData) {
             $fieldData = [];
@@ -225,8 +237,6 @@ class FormController extends BaseController
         if (!$this->request->is('post')) {
             return view('updateForm', ['data' => $data]);
         }
-        
-        print_r('after'); 
         
         // Get POST request
         $fieldInput = $this->request->getPost(['fieldType', 'labelText', 'inputClass', 'divClass']);
@@ -264,10 +274,9 @@ class FormController extends BaseController
             $fieldData[] = $fields;
         }// Save button, inserts $fieldData to database
         else if ($action === 'save') {
+            $fieldData = array_values($fieldData);
             // Delete all old fields
             $model->deleteAllByIDs($slug, $loggedUserID);
-            // Set $nextFormID
-            $nextFormID = $FormGenerator->getNextFormID($loggedUserID);
             // Set FormID and UserID of current field to fieldData
             foreach ($fieldData as &$field) {
                 $field['UserID'] = $loggedUserID;
@@ -277,7 +286,6 @@ class FormController extends BaseController
             foreach ($fieldData as $data) {
                 $model->insert($data);
             }
-            $html = '';
         } // Delete selected field
         else if ($action === 'delete') {
             $fieldData = array_values($fieldData);
@@ -291,8 +299,8 @@ class FormController extends BaseController
             $selectedField['id'] = $fieldID;
         } // Update selected field
         else if ($action === 'update') {
+            $fieldData = array_values($fieldData);
             $updatedInput = $this->request->getPost(['fieldType', 'labelText', 'inputClass', 'divClass', 'selectedFieldID']);
-            // print_r($currentField);
             $updatedField = [
                 'FieldType' => $updatedInput['fieldType'],
                 'LabelText' => $updatedInput['labelText'],
@@ -310,7 +318,19 @@ class FormController extends BaseController
         $data['html'] = $html;
         $data['selectedField'] = $selectedField;
         $data['slug'] = $slug;
-        //print_r($selectedField);
+
+        
+        $defaultData = $model->findAllByIDs($slug, $loggedUserID);
+        $defaultData = array_values($defaultData);
+        foreach ($defaultData as &$subarray) {
+            unset($subarray['FieldID']);
+        }
+        // Check if content has been edited
+        if($defaultData === $fieldData)
+            $edited = false;
+        else
+            $edited = true;
+        $data['edited'] = $edited;
         return view('updateForm', ['data' => $data]);
     }
 }

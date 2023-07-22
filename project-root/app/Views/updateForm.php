@@ -12,7 +12,7 @@
     <style>
     </style>
     <link rel="stylesheet" href="../css/form.css">
-    
+
 </head>
 
 <body>
@@ -54,7 +54,7 @@
                             <div class="tab-pane fade show active" id="tab1">
                                 <br>
                                 <h5 class="card-title">Title</h5>
-                                <form method="POST" action="<?= base_url('/update/'.$data['slug']) ?>">
+                                <form method="POST" action="<?= base_url('/update/' . $data['slug']) ?>">
                                     <?= csrf_field() ?>
                                     <!-- Form inputs for Title -->
                                     <div class="row">
@@ -73,13 +73,13 @@
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
-                                    <button type="submit" class="btn btn-primary" name="action" value="save">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary save-button" name="action" value="save">Save Changes</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab2">
                                 <br>
                                 <h5 class="card-title">Textbox Field</h5>
-                                <form method="POST" action="<?= base_url('/update/'.$data['slug']) ?>">
+                                <form method="POST" action="<?= base_url('/update/' . $data['slug']) ?>">
                                     <?= csrf_field() ?>
                                     <!-- Form inputs for TextBox -->
                                     <div class="row">
@@ -100,26 +100,26 @@
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
-                                    <button type="submit" class="btn btn-primary" name="action" value="save">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary save-button" name="action" value="save">Save Changes</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab3">
                                 <br>
                                 <h5 class="card-title">Dropdown Field</h5>
-                                <form method="POST" action="<?= base_url('/update/'.$data['slug']) ?>">
+                                <form method="POST" action="<?= base_url('/update/' . $data['slug']) ?>">
                                     <?= csrf_field() ?>
                                     <!-- Form inputs for DropDown -->
                                     <input type="hidden" name="fieldType" value="dropdown">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
-                                    <button type="submit" class="btn btn-primary" name="action" value="save">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary save-button" name="action" value="save">Save Changes</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab4">
                                 <br>
                                 <h5 class="card-title">Checkbox Field</h5>
-                                <form method="POST" action="<?= base_url('/update/'.$data['slug']) ?>">
+                                <form method="POST" action="<?= base_url('/update/' . $data['slug']) ?>">
                                     <?= csrf_field() ?>
                                     <!-- Form inputs for CheckBox -->
                                     <div class="row">
@@ -140,13 +140,13 @@
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
-                                    <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
+                                    <button type="submit" class="btn btn-primary save-button" name="action" value="save">Save</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab5">
                                 <br>
                                 <h5 class="card-title">Radio Field</h5>
-                                <form method="POST" action="<?= base_url('/update/'.$data['slug']) ?>">
+                                <form method="POST" action="<?= base_url('/update/' . $data['slug']) ?>">
                                     <?= csrf_field() ?>
                                     <!-- Form inputs for Radio -->
                                     <div class="row">
@@ -167,13 +167,13 @@
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
-                                    <button type="submit" class="btn btn-primary" name="action" value="save">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary save-button" name="action" value="save">Save Changes</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab6">
                                 <br>
                                 <h5 class="card-title">Plain Text</h5>
-                                <form method="POST" action="<?= base_url('/update/'.$data['slug']) ?>">
+                                <form method="POST" action="<?= base_url('/update/' . $data['slug']) ?>">
                                     <?= csrf_field() ?>
                                     <!-- Form inputs for Text -->
                                     <div class="row">
@@ -193,7 +193,7 @@
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
-                                    <button type="submit" class="btn btn-primary" name="action" value="save">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary save-button" name="action" value="save">Save Changes</button>
                                 </form>
                             </div>
                         </div>
@@ -213,6 +213,25 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="../js/toast/form.js"></script>
     <script>
+        $(document).ready(function() {
+            // Check the value of $data['edited']
+            var isEdited = <?= json_encode($data['edited']) ?>;
+
+            // Function to toggle the visibility of .save-button
+            function toggleSaveButtonVisibility() {
+                // Check the value of isEdited
+                if (isEdited) {
+                    // If $data['edited'] is true, show all .save-button
+                    $('.save-button').show();
+                } else {
+                    // If $data['edited'] is false, hide all .save-button
+                    $('.save-button').hide();
+                }
+            }
+
+            // Initially call the function to set the visibility based on the value of $data['edited']
+            toggleSaveButtonVisibility();
+        });
         // Get all elements with the 'close-icon' class
         const closeIcons = document.querySelectorAll('.close-icon');
 
@@ -227,7 +246,7 @@
 
                 // Create a form element to submit the data
                 const form = document.createElement('form');
-                form.action = "<?= base_url('/update/'.$data['slug']) ?>";
+                form.action = "<?= base_url('/update/' . $data['slug']) ?>";
                 form.method = "POST";
 
                 // Add the 'delete' action as a hidden input field
@@ -261,7 +280,7 @@
 
                 // Create a form element to submit the data
                 const form = document.createElement('form');
-                form.action = "<?= base_url('/update/'.$data['slug']) ?>";
+                form.action = "<?= base_url('/update/' . $data['slug']) ?>";
                 form.method = "POST";
 
                 // Add the 'edit' action as a hidden input field
