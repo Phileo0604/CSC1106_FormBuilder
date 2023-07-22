@@ -8,6 +8,9 @@ class FormBuilder extends Migration
 {
     public function up()
     {
+        // $this->forge->dropTable('forms');
+        // $this->forge->dropTable('users');
+        // $this->forge->dropTable('form_fields');
         //Forms Table
         $this->forge->addField([
             'formID' => [
@@ -109,6 +112,8 @@ class FormBuilder extends Migration
 
         $this->forge->addPrimaryKey('FieldID');
         $this->forge->createTable('form_fields');
+        $seeder = \Config\Database::seeder();
+        $seeder->call('FieldSeeder');
     }
 
     public function down()

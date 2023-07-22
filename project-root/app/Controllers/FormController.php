@@ -208,6 +208,7 @@ class FormController extends BaseController
             // Your logic to set the session data goes here
             session()->set('fieldData' . $loggedUserID . $slug, $fieldData);
         }
+
         $fieldData = session()->get('fieldData'.$loggedUserID . $slug);
         // Create $defaultData to check if content has been edited
         $defaultData = $model->findAllByIDs($slug, $loggedUserID);
