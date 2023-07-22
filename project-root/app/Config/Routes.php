@@ -65,7 +65,7 @@ $routes->group('', ['filter' => 'AlreadyLoggedIn'], function ($routes) {
    $routes->post('signin/check', 'AuthController::check');
    $routes->post('signup/save', 'AuthController::save');
    $routes->post('forgotpassword/check', 'AuthController::forgotpasswordCheck');
-   $routes->post('update/(:any)', 'AuthController::update/$1');
+   //$routes->post('update/(:any)', 'AuthController::update/$1');
 });
 
 // We get a performance increase by specifying the default
