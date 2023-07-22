@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\FormModel;
+use App\Models\FieldModel;
 use App\Models\UserModel;
 
 class DashboardController extends BaseController
@@ -13,8 +14,8 @@ class DashboardController extends BaseController
         $loggedUserID = session()->get('loggedUser');
 
         
-        $formModel = new FormModel();
-        $data['forms'] = $formModel->where('userID', $loggedUserID)->orderBy('formID', 'DESC')->findAll();
+        $fieldModel = new FieldModel();
+        $data['form_fields'] = $fieldModel->getFieldsByUserID($loggedUserID);
 
 
         return view('/Dashboard/index', $data);
@@ -24,9 +25,10 @@ class DashboardController extends BaseController
     
 
     // delete user
-    public function delete($id = null){
-        $formModel = new FormModel();
-        $formModel->where('formID', $id)->delete($id);
+    public function delete($FormID = null){
+        $loggedUserID = session()->get('loggedUser');
+        $fieldModel = new FieldModel();
+        $fieldModel->deleteAllByIDs($FormID, $loggedUserID);
         return $this->response->redirect(site_url('/dashboard'));
     }  
 

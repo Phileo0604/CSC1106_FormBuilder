@@ -45,7 +45,7 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
    $routes->get('signout', 'AuthController::logout');
 
    // Form CRUD routes
-   $routes->get('view', [FormController::class, 'view']);
+   $routes->get('view', [FormController::class, 'viewCustom']);
    $routes->match(['get', 'post'], 'create', [FormController::class, 'create']);
    $routes->match(['get', 'post'], 'update/(:segment)', [FormController::class, 'update']);
    $routes->match(['get', 'post'], 'view/(:segment)', [FormController::class, 'view']);
@@ -65,7 +65,7 @@ $routes->group('', ['filter' => 'AlreadyLoggedIn'], function ($routes) {
    $routes->post('signin/check', 'AuthController::check');
    $routes->post('signup/save', 'AuthController::save');
    $routes->post('forgotpassword/check', 'AuthController::forgotpasswordCheck');
-   //$routes->post('update/(:any)', 'AuthController::update/$1');
+   // $routes->post('update/(:any)', 'AuthController::update/$1');
 });
 
 // We get a performance increase by specifying the default
