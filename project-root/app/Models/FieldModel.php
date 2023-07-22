@@ -17,4 +17,24 @@ class FieldModel extends Model
         'UserID',
         'FormID',
     ];
+    public function findAllByIDs($formID, $userID)
+    {
+        // Use the query builder to retrieve rows with a specific FormID and UserID
+        $query = $this->builder()
+            ->where('formID', $formID)
+            ->where('UserID', $userID)
+            ->get();
+
+        // Return the result as a simple array
+        return $query->getResultArray();
+    }
+
+    public function deleteAllByIDs($formID, $userID)
+    {
+        // Use the query builder to delete rows with a specific FormID and UserID
+        return $this->builder()
+            ->where('FormID', $formID)
+            ->where('UserID', $userID)
+            ->delete();
+    }
 }

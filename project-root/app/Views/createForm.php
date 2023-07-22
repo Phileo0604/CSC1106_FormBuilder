@@ -68,9 +68,10 @@
                                             <input type="text" class="form-control" name="divClass" id="divClass" value="" placeholder="col-md-6" hidden>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="fieldType" value="title">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="fieldType" value="title">Add</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
                                     <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
                                 </form>
                             </div>
@@ -94,9 +95,10 @@
                                             <input type="text" class="form-control" name="divClass" id="divClass" value="" placeholder="col-md-6">
                                         </div>
                                     </div>
+                                    <input type="hidden" name="fieldType" value="textBox">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="fieldType" value="textBox">Add</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
                                     <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
                                 </form>
                             </div>
@@ -106,9 +108,10 @@
                                 <form method="POST" action="<?= base_url('/create') ?>">
                                     <?= csrf_field() ?>
                                     <!-- Form inputs for DropDown -->
+                                    <input type="hidden" name="fieldType" value="dropdown">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="fieldType" value="dropdown">Add</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
                                     <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
                                 </form>
                             </div>
@@ -132,9 +135,10 @@
                                             <input type="text" class="form-control" name="divClass" id="divClass" value="" placeholder="col-md-6">
                                         </div>
                                     </div>
+                                    <input type="hidden" name="fieldType" value="checkbox">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="fieldType" value="checkbox">Add</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
                                     <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
                                 </form>
                             </div>
@@ -158,9 +162,10 @@
                                             <input type="text" class="form-control" name="divClass" id="divClass" value="" placeholder="col-md-6">
                                         </div>
                                     </div>
+                                    <input type="hidden" name="fieldType" value="radio">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="fieldType" value="radio">Add</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
                                     <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
                                 </form>
                             </div>
@@ -183,9 +188,10 @@
                                             <input type="text" class="form-control" name="divClass" id="divClass" value="" placeholder="col-md-6" hidden>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="fieldType" value="text">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="fieldType" value="text">Add</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
                                     <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
                                 </form>
                             </div>
@@ -285,45 +291,44 @@
             const selectedFieldType = selectedFieldData.FieldType;
 
             // Find the 'Add' button with matching data-fieldtype attribute in each tab
-            const addButtonInTab1 = $('#tab1 button[value="' + selectedFieldType + '"]');
-            const addButtonInTab2 = $('#tab2 button[value="' + selectedFieldType + '"]');
-            const addButtonInTab3 = $('#tab3 button[value="' + selectedFieldType + '"]');
-            const addButtonInTab4 = $('#tab4 button[value="' + selectedFieldType + '"]');
-            const addButtonInTab5 = $('#tab5 button[value="' + selectedFieldType + '"]');
-            const addButtonInTab6 = $('#tab6 button[value="' + selectedFieldType + '"]');
+            const addButtonInTab1 = $('#tab1 input[value="' + selectedFieldType + '"]');
+            const addButtonInTab2 = $('#tab2 input[value="' + selectedFieldType + '"]');
+            const addButtonInTab3 = $('#tab3 input[value="' + selectedFieldType + '"]');
+            const addButtonInTab4 = $('#tab4 input[value="' + selectedFieldType + '"]');
+            const addButtonInTab5 = $('#tab5 input[value="' + selectedFieldType + '"]');
+            const addButtonInTab6 = $('#tab6 input[value="' + selectedFieldType + '"]');
 
             // Hide all 'Update' buttons initially
             $('.update-button').attr('hidden', true);
 
             // Show the 'Update' button in the corresponding tab if addButton exists
             if (selectedFieldType && addButtonInTab1.length) {
-                $('#tab1 .update-button').removeAttr('hidden');
+                $('.update-button').removeAttr('hidden');
                 $('.nav-item a[href="#tab1"]').addClass('active').parent().siblings().find('a').removeClass('active');
                 $('#tab1').addClass('show active').siblings('.tab-pane').removeClass('show active');
                 populateInputsInCurrentTab(selectedFieldData, '#tab1');
             } else if (selectedFieldType && addButtonInTab2.length) {
-                $('#tab2 .update-button').removeAttr('hidden');
+                $('.update-button').removeAttr('hidden');
                 $('.nav-item a[href="#tab2"]').addClass('active').parent().siblings().find('a').removeClass('active');
                 $('#tab2').addClass('show active').siblings('.tab-pane').removeClass('show active');
-
                 populateInputsInCurrentTab(selectedFieldData, '#tab2');
             } else if (selectedFieldType && addButtonInTab3.length) {
-                $('#tab3 .update-button').removeAttr('hidden');
+                $('.update-button').removeAttr('hidden');
                 $('.nav-item a[href="#tab3"]').addClass('active').parent().siblings().find('a').removeClass('active');
                 $('#tab3').addClass('show active').siblings('.tab-pane').removeClass('show active');
                 populateInputsInCurrentTab(selectedFieldData, '#tab3');
             } else if (selectedFieldType && addButtonInTab4.length) {
-                $('#tab4 .update-button').removeAttr('hidden');
+                $('.update-button').removeAttr('hidden');
                 $('.nav-item a[href="#tab4"]').addClass('active').parent().siblings().find('a').removeClass('active');
                 $('#tab4').addClass('show active').siblings('.tab-pane').removeClass('show active');
                 populateInputsInCurrentTab(selectedFieldData, '#tab4');
             } else if (selectedFieldType && addButtonInTab5.length) {
-                $('#tab5 .update-button').removeAttr('hidden');
+                $('.update-button').removeAttr('hidden');
                 $('.nav-item a[href="#tab5"]').addClass('active').parent().siblings().find('a').removeClass('active');
                 $('#tab5').addClass('show active').siblings('.tab-pane').removeClass('show active');
                 populateInputsInCurrentTab(selectedFieldData, '#tab5');
             } else if (selectedFieldType && addButtonInTab6.length) {
-                $('#tab6 .update-button').removeAttr('hidden');
+                $('.update-button').removeAttr('hidden');
                 $('.nav-item a[href="#tab6"]').addClass('active').parent().siblings().find('a').removeClass('active');
                 $('#tab6').addClass('show active').siblings('.tab-pane').removeClass('show active');
                 populateInputsInCurrentTab(selectedFieldData, '#tab6');

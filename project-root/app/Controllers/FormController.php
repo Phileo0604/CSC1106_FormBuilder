@@ -58,17 +58,20 @@ class FormController extends BaseController
         $db = Database::connect();
         // Initialize FormGenerator library
         $FormGenerator = new FormGenerator($db);
-        // Initialize variables
-        $html = '';
-        $selectedField = ['id'=> ''];
-        $data = [
-            'html'=>$html,
-            'selectedField'=>$selectedField,
-        ];
-        // Check if the field data is already stored in the session
-        $fieldData = session()->get('fieldData');
         // Get Login UserID
         $loggedUserID = session()->get('loggedUser');
+        // Initialize model
+        $model = model(FieldModel::class);
+        // Initialize variables
+        $html = '';
+        $selectedField = ['id' => ''];
+        $data = [
+            'html' => $html,
+            'selectedField' => $selectedField,
+        ];
+        // Check if the field data is already stored in the session
+        $fieldData = session()->get('fieldData'.$loggedUserID);
+        
         // If not stored in the session, initialize the field data
         if (!$fieldData) {
             $fieldData = [];
@@ -79,13 +82,12 @@ class FormController extends BaseController
         }
         // Set $nextFormID
         $nextFormID = $FormGenerator->getNextFormID($loggedUserID);
-        
+        print_r('before');
         // Check for post request
         if (!$this->request->is('post')) {
             return view('createForm', ['data' => $data]);
         }
-        // Initialize model
-        $model = model(FieldModel::class);
+        print_r('after');
 
         // Get POST request
         $fieldInput = $this->request->getPost(['fieldType', 'labelText', 'inputClass', 'divClass']);
@@ -99,41 +101,32 @@ class FormController extends BaseController
         ];
 
         // Execute selected action
-        // Add Title
-        if ($fieldInput['fieldType'] === 'title') {
-            $inputHTML = $FormGenerator->text($fieldInput['labelText']);
-            $fields['fieldHTML'] = serialize($inputHTML);
-            $fieldData[] = $fields;
-        }
-        // Add Textbox
-        else if ($fieldInput['fieldType'] === 'textBox') {
-            $inputHTML = $FormGenerator->textbox($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
-            $fields['fieldHTML'] = serialize($inputHTML);
-            $fieldData[] = $fields;
-        // Add Checkbox
-        } else if ($fieldInput['fieldType'] === 'checkbox') {
-            $inputHTML = $FormGenerator->checkbox($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
-            $fields['fieldHTML'] = serialize($inputHTML);
-            $fieldData[] = $fields;
-        // Add Dropdown (Not complete)
-        } else if ($fieldInput['fieldType'] === 'dropdown') {
-            // $inputHTML=$FormGenerator->dropdown($fieldInput['labelText'], null, $fieldInput['divClass'], $fieldInput['inputClass']);
-            // $fields['fieldHTML'] = serialize($inputHTML);
-            // $fieldData[] = $fields;
-            // Add Radio
-        } else if ($fieldInput['fieldType'] === 'radio') {
-            $inputHTML = $FormGenerator->radio($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
-            $fields['fieldHTML'] = serialize($inputHTML);
-            $fieldData[] = $fields;
-        // Add Plain Text
-        } else if ($fieldInput['fieldType'] === 'text') {
-            $inputHTML = $FormGenerator->text($fieldInput['labelText']);
+        if ($action === 'add') {
+            // Add Title
+            if ($fieldInput['fieldType'] === 'title') {
+                $inputHTML = $FormGenerator->text($fieldInput['labelText']);
+            } // Add Textbox
+            else if ($fieldInput['fieldType'] === 'textBox') {
+                $inputHTML = $FormGenerator->textbox($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
+            } // Add Checkbox
+            else if ($fieldInput['fieldType'] === 'checkbox') {
+                $inputHTML = $FormGenerator->checkbox($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
+            } // Add Dropdown (Not complete)
+            else if ($fieldInput['fieldType'] === 'dropdown') {
+                // $inputHTML=$FormGenerator->dropdown($fieldInput['labelText'], null, $fieldInput['divClass'], $fieldInput['inputClass']);
+            } // Add Radio
+            else if ($fieldInput['fieldType'] === 'radio') {
+                $inputHTML = $FormGenerator->radio($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
+            } // Add Plain Text
+            else if ($fieldInput['fieldType'] === 'text') {
+                $inputHTML = $FormGenerator->text($fieldInput['labelText']);
+            }
             $fields['fieldHTML'] = serialize($inputHTML);
             $fieldData[] = $fields;
         }
         // Save button, inserts $fieldData to database
         else if ($action === 'save') {
-            
+
             // Set FormID and UserID of current field to fieldData
             foreach ($fieldData as &$field) {
                 $field['UserID'] = $loggedUserID;
@@ -145,33 +138,31 @@ class FormController extends BaseController
             }
             $fieldData = [];
             $html = '';
-        }else if ($action === 'delete'){
+        } else if ($action === 'delete') {
             $fieldData = array_values($fieldData);
             $fieldID = $this->request->getPost('id');
             unset($fieldData[$fieldID]);
-        }else if ($action === 'edit'){
+        } else if ($action === 'edit') {
             $fieldData = array_values($fieldData);
             $fieldID = $this->request->getPost('id');
             $selectedField = $fieldData[$fieldID];
             $selectedField['id'] = $fieldID;
-        }else if($action === 'update'){
+        } else if ($action === 'update') {
             $updatedInput = $this->request->getPost(['fieldType', 'labelText', 'inputClass', 'divClass', 'selectedFieldID']);
-            $currentField = $fieldData[$updatedInput['selectedFieldID']];
             // print_r($currentField);
             $updatedField = [
-                'FieldType' => $currentField['FieldType'],
+                'FieldType' => $updatedInput['fieldType'],
                 'LabelText' => $updatedInput['labelText'],
                 'InputClass' => $updatedInput['inputClass'],
                 'DivClass' => $updatedInput['divClass'],
             ];
             $fieldData[$updatedInput['selectedFieldID']] = $updatedField;
             $html = $FormGenerator->buildForm($fieldData);
-            
         }
 
         // Store the updated field data in the session
         // $fieldData=[];
-        session()->set('fieldData', $fieldData);
+        session()->set('fieldData'.$loggedUserID, $fieldData);
         // Build the form
         $html = $FormGenerator->buildForm($fieldData);
         $data['html'] = $html;
@@ -180,8 +171,146 @@ class FormController extends BaseController
         return view('createForm', ['data' => $data]);
     }
 
-    public function update($slug=null)
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function update($slug = null)
     {
-        return view('update');
+        // Initialize database connection
+        $db = Database::connect();
+        // Initialize FormGenerator library
+        $FormGenerator = new FormGenerator($db);
+        // Get Login UserID
+        $loggedUserID = session()->get('loggedUser');
+        // Initialize model
+        $model = model(FieldModel::class);
+        $fieldData = $model->findAllByIDs($slug, $loggedUserID);
+        $fieldData = array_values($fieldData);
+        // Initialize variables
+        $html = '';
+        $selectedField = ['id' => ''];
+        $data = [
+            'html' => $html,
+            'selectedField' => $selectedField,
+            'slug' => $slug,
+        ];
+        // Check if the field data is already stored in the session
+        if (!session()->has('fieldData' . $loggedUserID . $slug)) {
+            // Your logic to set the session data goes here
+            session()->set('fieldData' . $loggedUserID . $slug, $fieldData);
+        }
+        $fieldData = session()->get('fieldData'.$loggedUserID . $slug);
+        // If not stored in the session, initialize the field data
+        if (!$fieldData) {
+            $fieldData = [];
+            
+        } // If something in $fieldData, build the form
+        else {
+            $html = $FormGenerator->buildForm($fieldData);
+            $data['html'] = $html;
+        }
+        
+
+        // Check for post request
+        if (!$this->request->is('post')) {
+            return view('updateForm', ['data' => $data]);
+        }
+        
+        print_r('after'); 
+        
+        // Get POST request
+        $fieldInput = $this->request->getPost(['fieldType', 'labelText', 'inputClass', 'divClass']);
+        $action = $this->request->getPost('action');
+        // Store input into fields array, this array will be appended to $fieldData
+        $fields = [
+            'FieldType' => $fieldInput['fieldType'],
+            'LabelText' => $fieldInput['labelText'],
+            'InputClass' => $fieldInput['inputClass'],
+            'DivClass' => $fieldInput['divClass'],
+        ];
+
+        // Execute selected action
+        if ($action === 'add') {
+            // Add Title
+            if ($fieldInput['fieldType'] === 'title') {
+                $inputHTML = $FormGenerator->text($fieldInput['labelText']);
+            } // Add Textbox
+            else if ($fieldInput['fieldType'] === 'textBox') {
+                $inputHTML = $FormGenerator->textbox($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
+            } // Add Checkbox
+            else if ($fieldInput['fieldType'] === 'checkbox') {
+                $inputHTML = $FormGenerator->checkbox($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
+            } // Add Dropdown (Not complete)
+            else if ($fieldInput['fieldType'] === 'dropdown') {
+                // $inputHTML=$FormGenerator->dropdown($fieldInput['labelText'], null, $fieldInput['divClass'], $fieldInput['inputClass']);
+            } // Add Radio
+            else if ($fieldInput['fieldType'] === 'radio') {
+                $inputHTML = $FormGenerator->radio($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
+            } // Add Plain Text
+            else if ($fieldInput['fieldType'] === 'text') {
+                $inputHTML = $FormGenerator->text($fieldInput['labelText']);
+            }
+            $fields['fieldHTML'] = serialize($inputHTML);
+            $fieldData[] = $fields;
+        }// Save button, inserts $fieldData to database
+        else if ($action === 'save') {
+            // Delete all old fields
+            $model->deleteAllByIDs($slug, $loggedUserID);
+            // Set $nextFormID
+            $nextFormID = $FormGenerator->getNextFormID($loggedUserID);
+            // Set FormID and UserID of current field to fieldData
+            foreach ($fieldData as &$field) {
+                $field['UserID'] = $loggedUserID;
+                $field['FormID'] = $slug;
+            }
+            // Save fieldData to database
+            foreach ($fieldData as $data) {
+                $model->insert($data);
+            }
+            $html = '';
+        } // Delete selected field
+        else if ($action === 'delete') {
+            $fieldData = array_values($fieldData);
+            $fieldID = $this->request->getPost('id');
+            unset($fieldData[$fieldID]);
+        } // Edit selected field
+        else if ($action === 'edit') {
+            $fieldData = array_values($fieldData);
+            $fieldID = $this->request->getPost('id');
+            $selectedField = $fieldData[$fieldID];
+            $selectedField['id'] = $fieldID;
+        } // Update selected field
+        else if ($action === 'update') {
+            $updatedInput = $this->request->getPost(['fieldType', 'labelText', 'inputClass', 'divClass', 'selectedFieldID']);
+            // print_r($currentField);
+            $updatedField = [
+                'FieldType' => $updatedInput['fieldType'],
+                'LabelText' => $updatedInput['labelText'],
+                'InputClass' => $updatedInput['inputClass'],
+                'DivClass' => $updatedInput['divClass'],
+            ];
+            $fieldData[$updatedInput['selectedFieldID']] = $updatedField;
+            $html = $FormGenerator->buildForm($fieldData);
+        }
+        // Store the updated field data in the session
+        // $fieldData=[];
+        session()->set('fieldData'.$loggedUserID. $slug, $fieldData);
+        // Build the form
+        $html = $FormGenerator->buildForm($fieldData);
+        $data['html'] = $html;
+        $data['selectedField'] = $selectedField;
+        $data['slug'] = $slug;
+        //print_r($selectedField);
+        return view('updateForm', ['data' => $data]);
     }
 }
