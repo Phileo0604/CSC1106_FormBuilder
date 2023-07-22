@@ -1,7 +1,7 @@
 <nav class="navbar navbar-custom">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand navbar-brand-centered" href="#">Form Builder</a>
+      <a class="navbar-brand navbar-brand-centered" href="/dashboard">Form Builder</a>
     </div>
     <ul class="nav navbar-nav navbar-right">
       <li><a href= "<?= site_url('signout') ?>" >Logout <span class="glyphicon glyphicon-log-out"></span></a></li>

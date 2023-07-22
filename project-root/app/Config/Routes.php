@@ -43,6 +43,13 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
    $routes->get('/dashboard', 'DashboardController::index');
    $routes->get('delete/(:num)', 'DashboardController::delete/$1');
    $routes->get('signout', 'AuthController::logout');
+
+   // Form CRUD routes
+   $routes->get('view', [FormController::class, 'view']);
+   $routes->match(['get', 'post'], 'create', [FormController::class, 'create']);
+   $routes->match(['get', 'post'], 'update/(:segment)', [FormController::class, 'update']);
+   $routes->match(['get', 'post'], 'view/(:segment)', [FormController::class, 'view']);
+
 });
 
 // by filter AlreadyLoggedIn, only those without session can access these routes
@@ -65,11 +72,6 @@ $routes->group('', ['filter' => 'AlreadyLoggedIn'], function ($routes) {
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-// Form CRUD routes
-$routes->get('view', [FormController::class, 'view']);
-$routes->match(['get', 'post'], 'create', [FormController::class, 'create']);
-$routes->match(['get', 'post'], 'update/(:segment)', [FormController::class, 'update']);
-$routes->match(['get', 'post'], 'view/(:segment)', [FormController::class, 'view']);
 
 /*
  * --------------------------------------------------------------------

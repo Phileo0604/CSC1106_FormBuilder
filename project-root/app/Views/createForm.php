@@ -15,6 +15,9 @@
     </style>
 </head>
 
+    <!-- Navbar -->
+    <?php include 'Dashboard/Header/index.php' ?>
+
 <body>
     <br>
     <div class="container">

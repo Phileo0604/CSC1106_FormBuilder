@@ -23,6 +23,10 @@
         }
     </style>
 <body>
+
+    <!-- Navbar -->
+    <?php include 'Dashboard/Header/index.php' ?>
+
     <br>
     <form action="<?= base_url('/') ?>">
     </form>

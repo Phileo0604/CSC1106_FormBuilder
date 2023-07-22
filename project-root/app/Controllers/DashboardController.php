@@ -11,9 +11,12 @@ class DashboardController extends BaseController
     {
 
         $loggedUserID = session()->get('loggedUser');
+
         
         $formModel = new FormModel();
         $data['forms'] = $formModel->where('userID', $loggedUserID)->orderBy('formID', 'DESC')->findAll();
+
+
         return view('/Dashboard/index', $data);
 
     }
