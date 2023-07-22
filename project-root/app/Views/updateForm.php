@@ -15,6 +15,8 @@
 
 </head>
 
+<!-- Navbar -->
+<?php include 'Dashboard/Header/index.php' ?>
 <body>
     <br>
     <div class="container">
@@ -93,7 +95,21 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="divClass">Class (div)</label>
-                                            <input type="text" class="form-control" name="divClass" id="divClass" value="" placeholder="col-md-6">
+                                            <select type="text" class="form-control" name="divClass" id="divClass">
+                                                <option value="">Select</option>
+                                                <option value="col-md-1">1/12</option>
+                                                <option value="col-md-2">2/12</option>
+                                                <option value="col-md-3">3/12</option>
+                                                <option value="col-md-4">4/12</option>
+                                                <option value="col-md-5">5/12</option>
+                                                <option value="col-md-6">6/12</option>
+                                                <option value="col-md-7">7/12</option>
+                                                <option value="col-md-8">8/12</option>
+                                                <option value="col-md-9">9/12</option>
+                                                <option value="col-md-10">10/12</option>
+                                                <option value="col-md-11">11/12</option>
+                                                <option value="col-md-12">12/12</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <input type="hidden" name="fieldType" value="textBox">
@@ -133,7 +149,21 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="divClass">Class (div)</label>
-                                            <input type="text" class="form-control" name="divClass" id="divClass" value="" placeholder="col-md-6">
+                                            <select type="text" class="form-control" name="divClass" id="divClass">
+                                                <option value="">Select</option>
+                                                <option value="col-md-1">1/12</option>
+                                                <option value="col-md-2">2/12</option>
+                                                <option value="col-md-3">3/12</option>
+                                                <option value="col-md-4">4/12</option>
+                                                <option value="col-md-5">5/12</option>
+                                                <option value="col-md-6">6/12</option>
+                                                <option value="col-md-7">7/12</option>
+                                                <option value="col-md-8">8/12</option>
+                                                <option value="col-md-9">9/12</option>
+                                                <option value="col-md-10">10/12</option>
+                                                <option value="col-md-11">11/12</option>
+                                                <option value="col-md-12">12/12</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <input type="hidden" name="fieldType" value="checkbox">
@@ -160,7 +190,21 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="divClass">Class (div)</label>
-                                            <input type="text" class="form-control" name="divClass" id="divClass" value="" placeholder="col-md-6">
+                                            <select type="text" class="form-control" name="divClass" id="divClass">
+                                                <option value="">Select</option>
+                                                <option value="col-md-1">1/12</option>
+                                                <option value="col-md-2">2/12</option>
+                                                <option value="col-md-3">3/12</option>
+                                                <option value="col-md-4">4/12</option>
+                                                <option value="col-md-5">5/12</option>
+                                                <option value="col-md-6">6/12</option>
+                                                <option value="col-md-7">7/12</option>
+                                                <option value="col-md-8">8/12</option>
+                                                <option value="col-md-9">9/12</option>
+                                                <option value="col-md-10">10/12</option>
+                                                <option value="col-md-11">11/12</option>
+                                                <option value="col-md-12">12/12</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <input type="hidden" name="fieldType" value="radio">

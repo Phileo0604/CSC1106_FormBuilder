@@ -56,10 +56,10 @@
              <td>
                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#updateModal" onclick="openModal(<?php echo $form['formID']; ?>)">Update</button>
                 <span style="margin-right: 10px;"></span>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal" onclick="openModal(<?php echo $form['formID']; ?>)">Delete</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="openModal(<?php echo $form['formID']; ?>)">Delete</button>
                 <span style="margin-right: 10px;"></span>
                   <a href="<?= site_url('/view/' . $form['formID']) ?>">
-                     <button type="button" class="btn btn-danger">View</button>
+                     <button type="button" class="btn btn-primary">View</button>
                   </a>
             </td>        
           </tr>
