@@ -10,7 +10,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="updateItem()" >Save changes</button>
+        <button type="button" class="btn btn-success" onclick="updateItem()" >Update Form</button>
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
   }
 
   function updateItem() {
-    console.log("Deleting item with ID: " + selectedId);
+    console.log("Updating item with ID: " + selectedId);
     window.location.href =  "<?= site_url('/update/') ?>" + selectedId;
   }
   
