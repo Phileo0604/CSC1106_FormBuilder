@@ -178,7 +178,7 @@ class FieldSeeder extends Seeder
             ['FieldID' => 2201, 'FieldType' => 'textBox', 'LabelText' => "Phone no.", 'InputClass' => '', 'DivClass' => 'col-md-4', 'UserID' => 1, 'FormID' => 8],
             ['FieldID' => 2202, 'FieldType' => 'textBox', 'LabelText' => "Firm's address", 'InputClass' => '', 'DivClass' => 'col-md-6', 'UserID' => 1, 'FormID' => 8],
             ['FieldID' => 2203, 'FieldType' => 'textBox', 'LabelText' => "Firm's EIN", 'InputClass' => '', 'DivClass' => 'col-md-4', 'UserID' => 1, 'FormID' => 8],
-            ['FieldID' => 2204, 'FieldType' => 'formName', 'LabelText' => 'Indicidual Income Tax Return (f1040)', 'InputClass' => '', 'DivClass' => '', 'UserID' => 1, 'FormID' => 8],
+            ['FieldID' => 2204, 'FieldType' => 'formName', 'LabelText' => 'Individual Income Tax Return (f1040)', 'InputClass' => '', 'DivClass' => '', 'UserID' => 1, 'FormID' => 8],
         ];
         // Insert the data into the 'fields' table
         $this->db->table('form_fields')->insertBatch($formData);
