@@ -24,10 +24,6 @@
 <?php include 'Modals/updateModal.php' ?>
 
 
-<!-- Delete1 Modal -->
-<?php include 'Modals/deleteModal1.php' ?>
-
-
 
 <div class="container mt-4">
 
@@ -46,7 +42,6 @@
       }
      ?>
     <table class="table table-bordered table-striped" id="forms-list">
-    <h3>MY FORMS</h3>
        <thead>
           <tr>
              <th>Title</th>
@@ -73,35 +68,6 @@
          <?php endif; ?>
        </tbody>
     </table>
-
-
-    <table class="table table-bordered table-striped" id="formsList-list">
-      <h3>MY CUSTOM FORMS</h3>
-       <thead>
-          <tr>
-             <th>Title</th>
-             <th>Action</th>
-          </tr>
-       </thead>
-       <tbody>
-          <?php if($form_fields): ?>
-          <?php foreach($form_fields as $field): ?>
-          <tr>
-             <td><?php echo $field['Title']; ?></td>
-
-             <td>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal1" onclick="openModal(<?php echo $field['FormID']; ?>)">Delete</button>
-                <span style="margin-right: 10px;"></span>
-                <!-- Change route -->
-                  <a href="<?= site_url('/view/' . $field['FormID']) ?>">
-                     <button type="button" class="btn btn-primary">View</button>
-                  </a>
-            </td>        
-          </tr>
-         <?php endforeach; ?>
-         <?php endif; ?>
-       </tbody>
-    </table>
 </div>
 
 
@@ -112,9 +78,6 @@
 <script>
     $(document).ready( function () {
       $('#forms-list').DataTable();
-  } );
-  $(document).ready( function () {
-      $('#formsList-list').DataTable();
   } );
 </script>
 </body>
