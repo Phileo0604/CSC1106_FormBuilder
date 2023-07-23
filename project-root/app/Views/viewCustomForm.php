@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../css/customForm.css">
 </head>
 <!-- Navbar -->
-<?php include 'Dashboard/Header/index.php' ?>
+<?php include 'Components/Header.php' ?>
 
 <body>
     <div class='container' id='nonprintable'>
