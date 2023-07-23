@@ -24,12 +24,9 @@
         </div>
         <hr>
     </div>
-
     <div class="row" id="printablecontent">
         <?= $html ?>
     </div>
-
-
     <script>
         function exportToPDF() {
             // Hide the export button before printing
