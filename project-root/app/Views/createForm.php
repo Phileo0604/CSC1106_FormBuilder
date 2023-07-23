@@ -51,6 +51,8 @@
                         $selectedFieldData = $data['selectedField'];
                         $selectedFieldID = $selectedFieldData['id'];
                         ?>
+
+                        
                         <!-- Add the tabs here -->
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="tab1">
@@ -74,8 +76,8 @@
                                     <input type="hidden" name="fieldType" value="title">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
-                                    <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
+                                    <button type="submit" class="btn btn-primary float-right" name="action" value="save">Save</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab2">
@@ -115,8 +117,8 @@
                                     <input type="hidden" name="fieldType" value="textBox">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
-                                    <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
+                                    <button type="submit" class="btn btn-primary float-right" name="action" value="save">Save</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab3">
@@ -128,8 +130,8 @@
                                     <input type="hidden" name="fieldType" value="dropdown">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
-                                    <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
+                                    <button type="submit" class="btn btn-primary float-right" name="action" value="save">Save</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab4">
@@ -169,8 +171,8 @@
                                     <input type="hidden" name="fieldType" value="checkbox">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
-                                    <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
+                                    <button type="submit" class="btn btn-primary float-right" name="action" value="save">Save</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab5">
@@ -210,8 +212,8 @@
                                     <input type="hidden" name="fieldType" value="radio">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
-                                    <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
+                                    <button type="submit" class="btn btn-primary float-right" name="action" value="save">Save</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab6">
@@ -236,8 +238,8 @@
                                     <input type="hidden" name="fieldType" value="text">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
-                                    <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
+                                    <button type="submit" class="btn btn-primary float-right" name="action" value="save">Save</button>
                                 </form>
                             </div>
                         </div>

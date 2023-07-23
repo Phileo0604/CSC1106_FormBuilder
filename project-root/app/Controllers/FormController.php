@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Libraries\FormGenerator;
 use App\Libraries\Form;
-
+use App\Models\FieldModel;
 use App\Models\FormModel;
 use App\Models\UserModel;
 use Config\Database;
@@ -16,39 +16,34 @@ class FormController extends BaseController
     {
     }
 
-    public function view($slug = null)
+    public function viewCustom()
     {
         // Initiate form.php
         $formHTML = new Form();
+        $html = $formHTML->form1();
+
+        return view('viewCustomForm', ['html' => $html]);
+    }
+
+    public function view($slug = 1)
+    {
+        // Initialize database connection
+        $db = Database::connect();
+        // Initialize FormGenerator library
+        $FormGenerator = new FormGenerator($db);
         // Get current UserID
         $loggedUserID = session()->get('loggedUser');
         // Initialize the HTML variables
         $html = '';
-        $serializedHTML = '';
-        $unserializedHTML = '';
-        // Append form to $html
-        $html .= $formHTML->form1();
-        // Initialize Form Model
-        $model = model(FormModel::class);
-        // Serialize the form HTML
-        $serializeHTML = serialize($html);
-        // Update the forms table
-        $formData = [
-            'userID' => $loggedUserID,
-            'formName' => 'Example Form',
-            'formHTML' => $serializeHTML,
-        ];
-        // $model->save($formData);
-        // Update Form according to FormID
-        $model->update($slug, $formData);
+        
+        // Initialize Field Model
+        $model = model(FieldModel::class);
         // Get form with FormID and unserialize it
-        $formData = $model->find($slug);
-        if ($formData) {
-            $serializedHTML = $formData['formHTML'];
-            $unserializedHTML = unserialize($serializedHTML);
-        }
+        $fieldData = $model->findAllByIDs($slug, $loggedUserID);
+        
+        $html = $FormGenerator->buildForm($fieldData);
 
-        return view('viewForm', ['html' => $unserializedHTML]);
+        return view('viewForm', ['html' => $html]);
     }
 
 
@@ -208,6 +203,7 @@ class FormController extends BaseController
             // Your logic to set the session data goes here
             session()->set('fieldData' . $loggedUserID . $slug, $fieldData);
         }
+
         $fieldData = session()->get('fieldData'.$loggedUserID . $slug);
         // Create $defaultData to check if content has been edited
         $defaultData = $model->findAllByIDs($slug, $loggedUserID);

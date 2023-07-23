@@ -33,6 +33,7 @@
     <!-- Create Button -->
     <div class="d-flex justify-content-start"  style="margin-bottom: 40px;">
         <a href= "<?= site_url('/create') ?>" class="btn btn-success mb-2">Create</a>
+        <a href= "<?= site_url('/view') ?>" class="btn btn-info mb-2">Custom Form</a>
     </div>
 
     <?php
@@ -48,17 +49,17 @@
           </tr>
        </thead>
        <tbody>
-          <?php if($forms): ?>
-          <?php foreach($forms as $form): ?>
+          <?php if($form_fields): ?>
+          <?php foreach($form_fields as $field): ?>
           <tr>
-             <td><?php echo $form['formName']; ?></td>
+             <td><?php echo $field['Title']; ?></td>
 
              <td>
-               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#updateModal" onclick="openModal(<?php echo $form['formID']; ?>)">Update</button>
+               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#updateModal" onclick="openModal(<?php echo $field['FormID']; ?>)">Update</button>
                 <span style="margin-right: 10px;"></span>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="openModal(<?php echo $form['formID']; ?>)">Delete</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="openModal(<?php echo $field['FormID']; ?>)">Delete</button>
                 <span style="margin-right: 10px;"></span>
-                  <a href="<?= site_url('/view/' . $form['formID']) ?>">
+                  <a href="<?= site_url('/view/' . $field['FormID']) ?>">
                      <button type="button" class="btn btn-primary">View</button>
                   </a>
             </td>        
