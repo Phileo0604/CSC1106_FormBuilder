@@ -46,11 +46,37 @@
                                 <a class="nav-link" data-bs-toggle="tab" href="#tab6">Text</a>
                             </li>
                         </ul>
-                        <!-- Set SelectedFieldID-->
+                        <!-- Set Values-->
                         <?php
                         $selectedFieldData = $data['selectedField'];
                         $selectedFieldID = $selectedFieldData['id'];
+                        $formName = $data['FormName'];
                         ?>
+                        <!-- Title Modal -->
+                        <div class="modal fade" id="formNameModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="titleModalLabel">Rename Title Name</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="POST" action="<?= base_url('/update/' . $data['slug']) ?>">
+                                        <div class="modal-body">
+                                            <!-- Modal content: Title input -->
+                                            <input type="hidden" name="fieldType" value="formName">
+                                            <input type="text" class="form-control" name="labelText" id="labelText" value="<?php echo $formName; ?>" placeholder="Form Title">
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-primary" id="submitTitleBtn" name="action" value="save">Update Form</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Add the tabs here -->
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="tab1">
@@ -74,8 +100,8 @@
                                     <input type="hidden" name="fieldType" value="title">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Fuekd</button>
-                                    <button type="submit" class="btn btn-primary save-button float-right" name="action" value="save">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
+                                    <button type="button" class="btn btn-primary save-button float-right"  data-toggle="modal" data-target="#formNameModal">Save Changes</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab2">
@@ -116,7 +142,7 @@
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
-                                    <button type="submit" class="btn btn-primary save-button float-right" name="action" value="save">Save Changes</button>
+                                    <button type="button" class="btn btn-primary save-button float-right" data-toggle="modal" data-target="#formNameModal">Save Changes</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab3">
@@ -129,7 +155,7 @@
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
-                                    <button type="submit" class="btn btn-primary save-button float-right" name="action" value="save">Save Changes</button>
+                                    <button type="button" class="btn btn-primary save-button float-right" data-toggle="modal" data-target="#formNameModal">Save Changes</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab4">
@@ -170,7 +196,7 @@
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
-                                    <button type="submit" class="btn btn-primary save-button float-right" name="action" value="save">Save</button>
+                                    <button type="button" class="btn btn-primary save-button float-right" data-toggle="modal" data-target="#formNameModal">Save</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab5">
@@ -211,7 +237,7 @@
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
-                                    <button type="submit" class="btn btn-primary save-button float-right" name="action" value="save">Save Changes</button>
+                                    <button type="button" class="btn btn-primary save-button float-right" data-toggle="modal" data-target="#formNameModal">Save Changes</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab6">
@@ -237,7 +263,7 @@
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
-                                    <button type="submit" class="btn btn-primary save-button float-right" name="action" value="save">Save Changes</button>
+                                    <button type="button    " class="btn btn-primary save-button float-right" data-toggle="modal" data-target="#formNameModal">Save Changes</button>
                                 </form>
                             </div>
                         </div>

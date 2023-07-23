@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>Form View</title>
@@ -13,13 +14,31 @@
 
 <!-- Navbar -->
 <?php include 'Components/Header.php' ?>
-<body>
 
-    <br>
-    <form action="<?= base_url('/') ?>">
-    </form>
+<body>
+    <div class='container' id='nonprintable'>
+        <div class='row'>
+            <h5 class="mt-3">Form Preview</h5>
+            <button class="btn btn-outline-primary ml-auto" id="exportBtn" onclick="exportToPDF()">Print</button>
+        </div>
+        <hr>
+    </div>
     <div class="row" id="container">
         <?= $html ?>
     </div>
+    <script>
+        function exportToPDF() {
+            // Hide the export button before printing
+            const exportBtn = document.getElementById("nonprintable");
+            exportBtn.style.display = "none";
+
+            // Trigger the print function
+            window.print();
+
+            // Show the export button again after printing is done (optional)
+            exportBtn.style.display = "block";
+        }
+    </script>
 </body>
+
 </html>
