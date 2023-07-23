@@ -32,7 +32,7 @@ class FormController extends BaseController
         $html = $formHTML->form1();
         // Get Login UserID
         $loggedUserID = session()->get('loggedUser');
-        $titleInput = 'CHANGEME';
+        $titleInput = $this->request->getPost(['formName']);
         $model = model(FormModel::class);
         $model->insert([
             'userID'=> $loggedUserID,
@@ -53,7 +53,6 @@ class FormController extends BaseController
         $loggedUserID = session()->get('loggedUser');
         // Initialize the HTML variables
         $html = '';
-
         // Initialize Field Model
         $model = model(FieldModel::class);
         // Get form with FormID and unserialize it
@@ -64,6 +63,19 @@ class FormController extends BaseController
         return view('viewForm', ['html' => $html]);
     }
 
+    public function viewCustomForm($slug=null)
+    {
+        // Initialize the HTML variable
+        $html = '';
+        // Initialize Form Model
+        $model = model(FormModel::class);
+        // Get form with FormID and unserialize it
+        $formData = $model->find($slug);
+        if ($formData) {
+            $html = unserialize($formData['formHTML']);
+        }
+        return view('viewCustom', ['html' => $html]);
+    }
 
     public function create()
     {
