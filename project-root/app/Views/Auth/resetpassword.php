@@ -27,7 +27,7 @@
 							<?= csrf_field(); ?>
 
                             <?php if(!isset($error)) : ?>
-                                <form method="POST" action="<?= base_url('update/' . $token) ?>"  class="needs-validation" novalidate="" autocomplete="off">
+                                <form method="POST" action="<?= base_url('update_password/' . $token) ?>"  class="needs-validation" novalidate="" autocomplete="off">
 								<?= csrf_field(); ?>
 
                                 <div class="mb-3">				

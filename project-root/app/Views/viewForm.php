@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../css/form.css">
 </head>
+
 <!-- Navbar -->
-<?php include 'Dashboard/Header/index.php' ?>
+<?php include 'Components/Header.php' ?>
 <body>
 
     <br>
