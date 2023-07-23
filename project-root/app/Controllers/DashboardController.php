@@ -22,6 +22,7 @@ class DashboardController extends BaseController
         $loggedUserID = session()->get('loggedUser');
         $fieldModel = new FieldModel();
         $fieldModel->deleteAllByIDs($FormID, $loggedUserID);
+        // echo 'Hello';
         return $this->response->redirect(site_url('/dashboard'));
     }  
 

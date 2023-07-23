@@ -10,7 +10,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger" onclick="deleteItem()" >Yes, delete this form</button>
+        <button type="button" class="btn btn-danger" onclick="deleteItem1()" >Yes, delete this form</button>
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@
     selectedId = id;
   }
 
-  function deleteItem() {
+  function deleteItem1() {
     console.log("Deleting item with ID: " + selectedId);
     window.location.href = "<?= site_url('/deleteCustom/') ?>" + selectedId;
   }
