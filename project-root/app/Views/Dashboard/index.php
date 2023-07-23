@@ -46,7 +46,8 @@
       }
      ?>
     <table class="table table-bordered table-striped" id="forms-list">
-    <h3>MY FORMS</h3>
+    <h3>My Forms</h3>
+    <hr>
        <thead>
           <tr>
              <th>Title</th>
@@ -73,10 +74,12 @@
          <?php endif; ?>
        </tbody>
     </table>
-
+            <br>
+            <br>
 
     <table class="table table-bordered table-striped" id="formsList-list">
-      <h3>MY CUSTOM FORMS</h3>
+      <h3>My Custom Forms</h3>
+      <hr>
        <thead>
           <tr>
              <th>Title</th>
@@ -84,16 +87,16 @@
           </tr>
        </thead>
        <tbody>
-          <?php if($form_fields): ?>
-          <?php foreach($form_fields as $field): ?>
+          <?php if($forms): ?>
+          <?php foreach($forms as $field): ?>
           <tr>
-             <td><?php echo $field['Title']; ?></td>
+             <td><?php echo $field['FormName']; ?></td>
 
              <td>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal1" onclick="openModal(<?php echo $field['FormID']; ?>)">Delete</button>
                 <span style="margin-right: 10px;"></span>
                 <!-- Change route -->
-                  <a href="<?= site_url('/view/' . $field['FormID']) ?>">
+                  <a href="<?= site_url('/viewCustomForm/' . $field['FormID']) ?>">
                      <button type="button" class="btn btn-primary">View</button>
                   </a>
             </td>        

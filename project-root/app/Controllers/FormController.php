@@ -63,6 +63,19 @@ class FormController extends BaseController
         return view('viewForm', ['html' => $html]);
     }
 
+    public function viewCustomForm($slug=null)
+    {
+        // Initialize the HTML variable
+        $html = '';
+        // Initialize Form Model
+        $model = model(FormModel::class);
+        // Get form with FormID and unserialize it
+        $formData = $model->find($slug);
+        if ($formData) {
+            $html = unserialize($formData['formHTML']);
+        }
+        return view('viewCustom', ['html' => $html]);
+    }
 
     public function create()
     {

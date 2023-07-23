@@ -42,6 +42,7 @@ $routes->set404Override();
 $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
    $routes->get('/dashboard', 'DashboardController::index');
    $routes->get('delete/(:num)', 'DashboardController::delete/$1');
+   $routes->get('deleteCustom/(:num)', 'DashboardController::deleteCustom/$1');
    $routes->get('signout', 'AuthController::logout');
 
    // Form CRUD routes
@@ -50,6 +51,7 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
    $routes->match(['get', 'post'], 'create', [FormController::class, 'create']);
    $routes->match(['get', 'post'], 'update/(:segment)', [FormController::class, 'update']);
    $routes->match(['get', 'post'], 'view/(:segment)', [FormController::class, 'view']);
+   $routes->match(['get', 'post'], 'viewCustomForm/(:segment)', [FormController::class, 'viewCustomForm']);
 
 });
 

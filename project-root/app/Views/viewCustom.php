@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Form View</title>
+    <title>Custom Form View</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <!-- Bootstrap JS (Popper.js and Bootstrap) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
@@ -18,7 +18,7 @@
 <body>
     <div class='container' id='nonprintable'>
         <div class='row'>
-            <h5 class="mt-3">Form Preview</h5>
+            <h5 class="mt-3">Custom Form Preview</h5>
             <button class="btn btn-outline-primary ml-auto" id="exportBtn" onclick="exportToPDF()">Print</button>
         </div>
         <hr>

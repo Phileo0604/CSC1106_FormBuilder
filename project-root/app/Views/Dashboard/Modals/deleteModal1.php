@@ -25,7 +25,6 @@
 
   function deleteItem() {
     console.log("Deleting item with ID: " + selectedId);
-    // Change route
-    // window.location.href = "<?= site_url('/delete/') ?>" + selectedId;
+    window.location.href = "<?= site_url('/deleteCustom/') ?>" + selectedId;
   }
 </script>
