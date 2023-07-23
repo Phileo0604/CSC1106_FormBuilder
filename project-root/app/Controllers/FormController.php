@@ -235,10 +235,12 @@ class FormController extends BaseController
         // Get Form Name
         foreach ($fieldData as $field) {
             $fieldType = $field['FieldType'];
-            if ($fieldType === 'formName')
+            if ($fieldType === 'formName'){
                 $formName = $field['LabelText'];
-            else
+                break;
+            }else{
                 $formName = 'Form';
+            }
         }
         $data['FormName'] = $formName;
         // Check for post request
