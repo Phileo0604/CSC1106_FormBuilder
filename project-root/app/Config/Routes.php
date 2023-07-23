@@ -46,6 +46,7 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
 
    // Form CRUD routes
    $routes->get('view', [FormController::class, 'viewCustom']);
+   $routes->match(['get', 'post'], 'saveCustomForm', [FormController::class, 'saveCustomForm']);
    $routes->match(['get', 'post'], 'create', [FormController::class, 'create']);
    $routes->match(['get', 'post'], 'update/(:segment)', [FormController::class, 'update']);
    $routes->match(['get', 'post'], 'view/(:segment)', [FormController::class, 'view']);

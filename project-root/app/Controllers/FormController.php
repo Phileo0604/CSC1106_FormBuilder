@@ -24,6 +24,24 @@ class FormController extends BaseController
 
         return view('viewCustomForm', ['html' => $html]);
     }
+    
+    public function saveCustomForm()
+    {
+        // Initiate form.php
+        $formHTML = new Form();
+        $html = $formHTML->form1();
+        // Get Login UserID
+        $loggedUserID = session()->get('loggedUser');
+        $titleInput = 'CHANGEME';
+        $model = model(FormModel::class);
+        $model->insert([
+            'userID'=> $loggedUserID,
+            'formName'=>$titleInput,
+            'formHTML'=>serialize($html),
+        ]);
+
+        return redirect('dashboard');
+    }
 
     public function view($slug = 1)
     {

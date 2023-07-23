@@ -20,11 +20,13 @@
     <div class='container' id='nonprintable'>
         <div class='row'>
             <h5 class="mt-3">Form Preview</h5>
-            <button class="btn btn-outline-primary ml-auto" id="exportBtn" onclick="exportToPDF()">Print</button>
+            <div class="btn-group ml-auto" role="group" aria-label="SaveExportGroup">
+                <button class="btn btn-outline-primary ml-auto" id="saveCustomFormBtn" onclick="saveCustomForm()">Save Form</button>
+                <button class="btn btn-outline-primary ml-auto" id="exportBtn" onclick="exportToPDF()">Print</button>
+            </div>
         </div>
         <hr>
     </div>
-
     <div class="row" id="printablecontent">
         <?= $html ?>
     </div>
@@ -41,6 +43,9 @@
 
             // Show the export button again after printing is done (optional)
             exportBtn.style.display = "block";
+        }
+        function saveCustomForm(){
+            window.location.href = "<?= base_url('/saveCustomForm') ?>";
         }
     </script>
 </body>
