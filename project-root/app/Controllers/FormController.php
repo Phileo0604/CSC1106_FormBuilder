@@ -53,12 +53,12 @@ class FormController extends BaseController
         $loggedUserID = session()->get('loggedUser');
         // Initialize the HTML variables
         $html = '';
-        
+
         // Initialize Field Model
         $model = model(FieldModel::class);
         // Get form with FormID and unserialize it
         $fieldData = $model->findAllByIDs($slug, $loggedUserID);
-        
+
         $html = $FormGenerator->buildForm($fieldData);
 
         return view('viewForm', ['html' => $html]);
@@ -83,8 +83,8 @@ class FormController extends BaseController
             'selectedField' => $selectedField,
         ];
         // Check if the field data is already stored in the session
-        $fieldData = session()->get('fieldData'.$loggedUserID);
-        
+        $fieldData = session()->get('fieldData' . $loggedUserID);
+
         // If not stored in the session, initialize the field data
         if (!$fieldData) {
             $fieldData = [];
@@ -137,7 +137,14 @@ class FormController extends BaseController
         }
         // Save button, inserts $fieldData to database
         else if ($action === 'save') {
-
+            $fields = [
+                'FieldType' => $fieldInput['fieldType'],
+                'LabelText' => $fieldInput['labelText'],
+                'InputClass' => '',
+                'DivClass' => '',
+                'fieldHTML' => '',
+            ];
+            $fieldData[] = $fields;
             // Set FormID and UserID of current field to fieldData
             foreach ($fieldData as &$field) {
                 $field['UserID'] = $loggedUserID;
@@ -171,8 +178,7 @@ class FormController extends BaseController
         }
 
         // Store the updated field data in the session
-        // $fieldData=[];
-        session()->set('fieldData'.$loggedUserID, $fieldData);
+        session()->set('fieldData' . $loggedUserID, $fieldData);
         // Build the form
         $html = $FormGenerator->buildForm($fieldData);
         $data['html'] = $html;
@@ -208,21 +214,21 @@ class FormController extends BaseController
         // Initialize variables
         $html = '';
         $selectedField = ['id' => ''];
-        $edited=false;
+        $edited = false;
+        $formName = '';
         $data = [
             'html' => $html,
             'selectedField' => $selectedField,
             'slug' => $slug,
-            'edited' => $edited, 
+            'edited' => $edited,
         ];
-        
+
         // Check if the field data is already stored in the session
         if (!session()->has('fieldData' . $loggedUserID . $slug)) {
             // Your logic to set the session data goes here
             session()->set('fieldData' . $loggedUserID . $slug, $fieldData);
         }
-
-        $fieldData = session()->get('fieldData'.$loggedUserID . $slug);
+        $fieldData = session()->get('fieldData' . $loggedUserID . $slug);
         // Create $defaultData to check if content has been edited
         $defaultData = $model->findAllByIDs($slug, $loggedUserID);
         $defaultData = array_values($defaultData);
@@ -230,7 +236,7 @@ class FormController extends BaseController
             unset($subarray['FieldID']);
         }
         // Check if content has been edited
-        if($defaultData === $fieldData)
+        if ($defaultData === $fieldData)
             $edited = false;
         else
             $edited = true;
@@ -239,19 +245,25 @@ class FormController extends BaseController
         // If not stored in the session, initialize the field data
         if (!$fieldData) {
             $fieldData = [];
-            
-        } // If something in $fieldData, build the form
+        } // If $fieldData not empty, build the form
         else {
             $html = $FormGenerator->buildForm($fieldData);
             $data['html'] = $html;
         }
-        
 
+        // Get Form Name
+        foreach ($fieldData as $field) {
+            $fieldType = $field['FieldType'];
+            if ($fieldType === 'formName')
+                $formName = $field['LabelText'];
+            else
+                $formName = 'Form';
+        }
+        $data['FormName'] = $formName;
         // Check for post request
         if (!$this->request->is('post')) {
             return view('updateForm', ['data' => $data]);
         }
-        
         // Get POST request
         $fieldInput = $this->request->getPost(['fieldType', 'labelText', 'inputClass', 'divClass']);
         $action = $this->request->getPost('action');
@@ -286,9 +298,28 @@ class FormController extends BaseController
             }
             $fields['fieldHTML'] = serialize($inputHTML);
             $fieldData[] = $fields;
-        }// Save button, inserts $fieldData to database
+        } // Save button, inserts $fieldData to database
         else if ($action === 'save') {
             $fieldData = array_values($fieldData);
+            $newFormNameField = [
+                'FieldType' => $fieldInput['fieldType'],
+                'LabelText' => $fieldInput['labelText'],
+                'InputClass' => '',
+                'DivClass' => '',
+                'fieldHTML' => '',
+            ];
+            $index = -1;
+            // Find index of form name field
+            foreach ($fieldData as $key => $field) {
+                if ($field['FieldType'] === 'formName') {
+                    $index = $key;
+                    break;
+                }
+            }
+            // Replace the field if it exists
+            if ($index !== -1) {
+                $fieldData[$index] = $newFormNameField;
+            }
             // Delete all old fields
             $model->deleteAllByIDs($slug, $loggedUserID);
             // Set FormID and UserID of current field to fieldData
@@ -325,22 +356,21 @@ class FormController extends BaseController
             $html = $FormGenerator->buildForm($fieldData);
         }
         // Store the updated field data in the session
-        // $fieldData=[];
-        session()->set('fieldData'.$loggedUserID. $slug, $fieldData);
+        session()->set('fieldData' . $loggedUserID . $slug, $fieldData);
         // Build the form
         $html = $FormGenerator->buildForm($fieldData);
         $data['html'] = $html;
         $data['selectedField'] = $selectedField;
         $data['slug'] = $slug;
+        $data['FormName'] = $formName;
 
-        
         $defaultData = $model->findAllByIDs($slug, $loggedUserID);
         $defaultData = array_values($defaultData);
         foreach ($defaultData as &$subarray) {
             unset($subarray['FieldID']);
         }
         // Check if content has been edited
-        if($defaultData === $fieldData)
+        if ($defaultData === $fieldData)
             $edited = false;
         else
             $edited = true;
