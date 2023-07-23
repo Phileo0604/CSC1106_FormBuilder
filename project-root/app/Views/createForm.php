@@ -34,9 +34,6 @@
                                 <a class="nav-link" data-bs-toggle="tab" href="#tab2">Textbox</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#tab3">Dropdown</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#tab4">Checkbox</a>
                             </li>
                             <li class="nav-item">
@@ -77,6 +74,26 @@
                             </div>
                         </div>
 
+                        <!-- Clear All Modal -->
+                        <div class="modal fade" id="clearAllModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <p class="modal-title" id="titleModalLabel">Are you sure? This will DELETE all fields!</p>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="POST" action="<?= base_url('/create') ?>">
+                                        <div class="modal-body">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-danger" id="submitTitleBtn" name="action" value="clear">Clear All Data</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Add the tabs here -->
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="tab1">
@@ -102,6 +119,7 @@
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
                                     <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#formNameModal">Save</button>
+                                    <button type="button" class="btn btn-outline-danger float-right" style="margin-right: 10px;" data-toggle="modal" data-target="#clearAllModal">Clear All</button>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="tab2">
@@ -139,19 +157,6 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="fieldType" value="textBox">
-                                    <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
-                                    <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
-                                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#formNameModal">Save</button>
-                                </form>
-                            </div>
-                            <div class="tab-pane fade" id="tab3">
-                                <br>
-                                <h5 class="card-title">Dropdown Field</h5>
-                                <form method="POST" action="<?= base_url('/create') ?>">
-                                    <?= csrf_field() ?>
-                                    <!-- Form inputs for DropDown -->
-                                    <input type="hidden" name="fieldType" value="dropdown">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
@@ -364,7 +369,6 @@
             // Find the 'Add' button with matching data-fieldtype attribute in each tab
             const addButtonInTab1 = $('#tab1 input[value="' + selectedFieldType + '"]');
             const addButtonInTab2 = $('#tab2 input[value="' + selectedFieldType + '"]');
-            const addButtonInTab3 = $('#tab3 input[value="' + selectedFieldType + '"]');
             const addButtonInTab4 = $('#tab4 input[value="' + selectedFieldType + '"]');
             const addButtonInTab5 = $('#tab5 input[value="' + selectedFieldType + '"]');
             const addButtonInTab6 = $('#tab6 input[value="' + selectedFieldType + '"]');
@@ -383,11 +387,6 @@
                 $('.nav-item a[href="#tab2"]').addClass('active').parent().siblings().find('a').removeClass('active');
                 $('#tab2').addClass('show active').siblings('.tab-pane').removeClass('show active');
                 populateInputsInCurrentTab(selectedFieldData, '#tab2');
-            } else if (selectedFieldType && addButtonInTab3.length) {
-                $('.update-button').removeAttr('hidden');
-                $('.nav-item a[href="#tab3"]').addClass('active').parent().siblings().find('a').removeClass('active');
-                $('#tab3').addClass('show active').siblings('.tab-pane').removeClass('show active');
-                populateInputsInCurrentTab(selectedFieldData, '#tab3');
             } else if (selectedFieldType && addButtonInTab4.length) {
                 $('.update-button').removeAttr('hidden');
                 $('.nav-item a[href="#tab4"]').addClass('active').parent().siblings().find('a').removeClass('active');

@@ -160,18 +160,6 @@ class FormGenerator
 
         return $html;
     }
-    // Build HTML for dropdown
-    public function dropdown($label='Name', $divClass='col-md-1', $inputClass='form-control')
-    {
-        // Add code here
-    }
-    // Build HTML for button
-    public function button($label='Name', $divClass='col-md-1', $inputClass='btn')
-    {
-        // Add code here
-    }
-
-    
 
     // Get incremented FormID
     public function getNextFormID($userID){
@@ -214,51 +202,4 @@ class FormGenerator
         }
         return $html;
     }
-
-
-    // All this to be deleted
-
-    // Build form html
-    // public function buildForm($fieldData)
-    // {
-
-    //     $html = '<form>';
-
-    //     foreach ($fieldData as $field) {
-    //         $html .= $this->buildField($field);
-    //     }
-
-    //     $html .= '<button type="submit">Submit</button>';
-    //     $html .= '</form>';
-
-    //     return $html;
-    // }
-
-    // Build each field
-
-    // protected function buildField($field)
-    // {
-    //     $html = '<div>';
-    //     $html .= '<label for="' . $field['label'] . '">' . $field['label'] . '</label>' . '<br>';
-    //     $attributes = [
-    //         'type' => $field['type'],
-    //         'size' => $field['size'],
-    //         'placeholder' => $field['placeholder'],
-    //         'required' => $field['required'],
-    //     ];
-
-    //     $inputTag = '<input';
-    //     foreach ($attributes as $name => $value) {
-    //         if (!empty($value)) {
-    //             $inputTag .= ' ' . $name . '="' . $value . '"';
-    //         }
-    //     }
-    //     $inputTag .= '>';
-
-    //     $html .= $inputTag;
-    //     $html .= '</div>';
-
-    //     return $html;
-    // }
-
 }
