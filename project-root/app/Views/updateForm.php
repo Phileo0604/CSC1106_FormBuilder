@@ -48,6 +48,8 @@
                         $selectedFieldData = $data['selectedField'];
                         $selectedFieldID = $selectedFieldData['id'];
                         $formName = $data['FormName'];
+                        $loggedUserID = $data['loggedUserID'];
+                        $slug = $data['slug'];
                         ?>
                         <!-- Title Modal -->
                         <div class="modal fade" id="formNameModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -88,7 +90,7 @@
                                             <input type="text" class="form-control" name="labelText" id="labelText" value="" placeholder="Name">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <input type="text" class="form-control" name="inputClass" id="inputClass" value="" placeholder="form-control" hidden>
+                                            <input type="text" class="form-control" name="inputClass" id="inputClass" value="form-control" placeholder="form-control" hidden>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <input type="text" class="form-control" name="divClass" id="divClass" value="" placeholder="col-md-6" hidden>
@@ -114,7 +116,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="inputClass">Class (input)</label>
-                                            <input type="text" class="form-control" name="inputClass" id="inputClass" value="" placeholder="form-control">
+                                            <input type="text" class="form-control" name="inputClass" id="inputClass" value="form-control" placeholder="form-control">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="divClass">Class (div)</label>
@@ -155,7 +157,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="inputClass">Class (input)</label>
-                                            <input type="text" class="form-control" name="inputClass" id="inputClass" value="" placeholder="form-control">
+                                            <input type="text" class="form-control" name="inputClass" id="inputClass" value="form-control" placeholder="form-control">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="divClass">Class (div)</label>
@@ -196,7 +198,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="inputClass">Class (input)</label>
-                                            <input type="text" class="form-control" name="inputClass" id="inputClass" value="" placeholder="form-control">
+                                            <input type="text" class="form-control" name="inputClass" id="inputClass" value="form-control" placeholder="form-control">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="divClass">Class (div)</label>
@@ -237,7 +239,7 @@
                                         </div>
                                         <!-- This part is hidden -->
                                         <div class="form-group col-md-4">
-                                            <input type="text" class="form-control" name="inputClass" id="inputClass" value="" placeholder="form-control" hidden>
+                                            <input type="text" class="form-control" name="inputClass" id="inputClass" value="form-control" placeholder="form-control" hidden>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <input type="text" class="form-control" name="divClass" id="divClass" value="" placeholder="col-md-6" hidden>

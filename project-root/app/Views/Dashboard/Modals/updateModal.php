@@ -25,7 +25,7 @@
 
   function updateItem() {
     console.log("Updating item with ID: " + selectedId);
-    window.location.href =  "<?= site_url('/update/') ?>" + selectedId;
+    window.location.href =  "<?= site_url('/unset-session-data/') ?>" + selectedId;
   }
   
 </script>

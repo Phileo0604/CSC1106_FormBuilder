@@ -45,14 +45,14 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
    $routes->get('deleteCustom/(:num)', 'DashboardController::deleteCustom/$1');
    $routes->get('signout', 'AuthController::logout');
 
-   // Form CRUD routes
+   // FormController routes
    $routes->get('view', [FormController::class, 'viewCustom']);
    $routes->match(['get', 'post'], 'saveCustomForm', [FormController::class, 'saveCustomForm']);
    $routes->match(['get', 'post'], 'create', [FormController::class, 'create']);
    $routes->match(['get', 'post'], 'update/(:segment)', [FormController::class, 'update']);
    $routes->match(['get', 'post'], 'view/(:segment)', [FormController::class, 'view']);
    $routes->match(['get', 'post'], 'viewCustomForm/(:segment)', [FormController::class, 'viewCustomForm']);
-
+   $routes->match(['get', 'post'], '/unset-session-data/(:segment)', [FormController::class, 'unsetSessionData']);
 });
 
 // by filter AlreadyLoggedIn, only those without session can access these routes

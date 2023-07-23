@@ -216,11 +216,10 @@ class FormController extends BaseController
             'html' => $html,
             'selectedField' => $selectedField,
             'slug' => $slug,
+            'loggedUserID' => $loggedUserID,
         ];
-
         // Check if the field data is already stored in the session
         if (!session()->has('fieldData' . $loggedUserID . $slug)) {
-            // Your logic to set the session data goes here
             session()->set('fieldData' . $loggedUserID . $slug, $fieldData);
         }
         $fieldData = session()->get('fieldData' . $loggedUserID . $slug);
@@ -292,6 +291,7 @@ class FormController extends BaseController
             foreach ($fieldData as $data) {
                 $model->insert($data);
             }
+            session()->set('fieldData' . $loggedUserID . $slug, null);
         } // Delete selected field
         else if ($action === 'delete') {
             $fieldData = array_values($fieldData);
@@ -324,6 +324,7 @@ class FormController extends BaseController
         $data['selectedField'] = $selectedField;
         $data['slug'] = $slug;
         $data['FormName'] = $formName;
+        $data['loggedUserID'] = $loggedUserID;
 
         $defaultData = $model->findAllByIDs($slug, $loggedUserID);
         $defaultData = array_values($defaultData);
@@ -331,5 +332,15 @@ class FormController extends BaseController
             unset($subarray['FieldID']);
         }
         return view('updateForm', ['data' => $data]);
+    }
+
+    // Unset Session. Called when the update button is clicked
+    // This is to prevent the update session from persisting when the user is updating other forms
+    public function unsetSessionData($slug=null)
+    {
+        $loggedUserID = session()->get('loggedUser');
+        // Unset the session data
+        session()->remove('fieldData' . $loggedUserID . $slug);
+        return redirect()->to('/update/' . $slug);
     }
 }
