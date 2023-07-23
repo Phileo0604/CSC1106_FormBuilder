@@ -74,7 +74,7 @@
                                     <input type="hidden" name="fieldType" value="title">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Fuekd</button>
                                     <button type="submit" class="btn btn-primary save-button float-right" name="action" value="save">Save Changes</button>
                                 </form>
                             </div>
@@ -115,7 +115,7 @@
                                     <input type="hidden" name="fieldType" value="textBox">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
                                     <button type="submit" class="btn btn-primary save-button float-right" name="action" value="save">Save Changes</button>
                                 </form>
                             </div>
@@ -128,7 +128,7 @@
                                     <input type="hidden" name="fieldType" value="dropdown">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
                                     <button type="submit" class="btn btn-primary save-button float-right" name="action" value="save">Save Changes</button>
                                 </form>
                             </div>
@@ -169,7 +169,7 @@
                                     <input type="hidden" name="fieldType" value="checkbox">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
                                     <button type="submit" class="btn btn-primary save-button float-right" name="action" value="save">Save</button>
                                 </form>
                             </div>
@@ -210,7 +210,7 @@
                                     <input type="hidden" name="fieldType" value="radio">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
                                     <button type="submit" class="btn btn-primary save-button float-right" name="action" value="save">Save Changes</button>
                                 </form>
                             </div>
@@ -236,7 +236,7 @@
                                     <input type="hidden" name="fieldType" value="text">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add</button>
+                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
                                     <button type="submit" class="btn btn-primary save-button float-right" name="action" value="save">Save Changes</button>
                                 </form>
                             </div>

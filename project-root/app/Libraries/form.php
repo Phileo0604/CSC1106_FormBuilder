@@ -25,11 +25,11 @@ class Form
         $FormGenerator = new FormGenerator($db);
         $html = "";
         // Add fields here
-        $html .= $FormGenerator->title('Form title');
-        $html .= $FormGenerator->textbox('texty papa', 'col-md-6', null);
-        $html .= $FormGenerator->checkbox('checky box', null, '');
-        $html .= $FormGenerator->radio('radio', null, '');
-        $html .= $FormGenerator->text('this is some texty');
+        $html .= $FormGenerator->title('Custom Form');
+        $html .= $FormGenerator->textbox('Textbox', 'col-md-6', null);
+        $html .= $FormGenerator->checkbox('Checkbox', null, '');
+        $html .= $FormGenerator->radio('Radio', null, '');
+        $html .= $FormGenerator->text('This is some text');
         return $html;
     }
 }
