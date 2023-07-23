@@ -95,26 +95,6 @@ class FormController extends BaseController
 
         // Execute selected action
         if ($action === 'add') {
-            // Add Title
-            if ($fieldInput['fieldType'] === 'title') {
-                $inputHTML = $FormGenerator->text($fieldInput['labelText']);
-            } // Add Textbox
-            else if ($fieldInput['fieldType'] === 'textBox') {
-                $inputHTML = $FormGenerator->textbox($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
-            } // Add Checkbox
-            else if ($fieldInput['fieldType'] === 'checkbox') {
-                $inputHTML = $FormGenerator->checkbox($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
-            } // Add Dropdown (Not complete)
-            else if ($fieldInput['fieldType'] === 'dropdown') {
-                // $inputHTML=$FormGenerator->dropdown($fieldInput['labelText'], null, $fieldInput['divClass'], $fieldInput['inputClass']);
-            } // Add Radio
-            else if ($fieldInput['fieldType'] === 'radio') {
-                $inputHTML = $FormGenerator->radio($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
-            } // Add Plain Text
-            else if ($fieldInput['fieldType'] === 'text') {
-                $inputHTML = $FormGenerator->text($fieldInput['labelText']);
-            }
-            $fields['fieldHTML'] = serialize($inputHTML);
             $fieldData[] = $fields;
         }
         // Save button, inserts $fieldData to database
@@ -124,7 +104,6 @@ class FormController extends BaseController
                 'LabelText' => $fieldInput['labelText'],
                 'InputClass' => '',
                 'DivClass' => '',
-                'fieldHTML' => '',
             ];
             $fieldData[] = $fields;
             // Set FormID and UserID of current field to fieldData
@@ -138,6 +117,8 @@ class FormController extends BaseController
             }
             $fieldData = [];
             $html = '';
+            session()->set('fieldData' . $loggedUserID, $fieldData);
+            return redirect()->to('/dashboard');
         } else if ($action === 'delete') {
             $fieldData = array_values($fieldData);
             $fieldID = $this->request->getPost('id');
@@ -157,6 +138,10 @@ class FormController extends BaseController
             ];
             $fieldData[$updatedInput['selectedFieldID']] = $updatedField;
             $html = $FormGenerator->buildForm($fieldData);
+        } else if ($action === 'clear'){
+            $fieldData = [];
+            $html = '';
+            // return redirect()->to('/create');
         }
 
         // Store the updated field data in the session
@@ -196,13 +181,11 @@ class FormController extends BaseController
         // Initialize variables
         $html = '';
         $selectedField = ['id' => ''];
-        $edited = false;
         $formName = '';
         $data = [
             'html' => $html,
             'selectedField' => $selectedField,
             'slug' => $slug,
-            'edited' => $edited,
         ];
 
         // Check if the field data is already stored in the session
@@ -211,19 +194,6 @@ class FormController extends BaseController
             session()->set('fieldData' . $loggedUserID . $slug, $fieldData);
         }
         $fieldData = session()->get('fieldData' . $loggedUserID . $slug);
-        // Create $defaultData to check if content has been edited
-        $defaultData = $model->findAllByIDs($slug, $loggedUserID);
-        $defaultData = array_values($defaultData);
-        foreach ($defaultData as &$subarray) {
-            unset($subarray['FieldID']);
-        }
-        // Check if content has been edited
-        if ($defaultData === $fieldData)
-            $edited = false;
-        else
-            $edited = true;
-        // Set edited value
-        $data['edited'] = $edited;
         // If not stored in the session, initialize the field data
         if (!$fieldData) {
             $fieldData = [];
@@ -259,26 +229,6 @@ class FormController extends BaseController
 
         // Execute selected action
         if ($action === 'add') {
-            // Add Title
-            if ($fieldInput['fieldType'] === 'title') {
-                $inputHTML = $FormGenerator->text($fieldInput['labelText']);
-            } // Add Textbox
-            else if ($fieldInput['fieldType'] === 'textBox') {
-                $inputHTML = $FormGenerator->textbox($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
-            } // Add Checkbox
-            else if ($fieldInput['fieldType'] === 'checkbox') {
-                $inputHTML = $FormGenerator->checkbox($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
-            } // Add Dropdown (Not complete)
-            else if ($fieldInput['fieldType'] === 'dropdown') {
-                // $inputHTML=$FormGenerator->dropdown($fieldInput['labelText'], null, $fieldInput['divClass'], $fieldInput['inputClass']);
-            } // Add Radio
-            else if ($fieldInput['fieldType'] === 'radio') {
-                $inputHTML = $FormGenerator->radio($fieldInput['labelText'], $fieldInput['divClass'], $fieldInput['inputClass']);
-            } // Add Plain Text
-            else if ($fieldInput['fieldType'] === 'text') {
-                $inputHTML = $FormGenerator->text($fieldInput['labelText']);
-            }
-            $fields['fieldHTML'] = serialize($inputHTML);
             $fieldData[] = $fields;
         } // Save button, inserts $fieldData to database
         else if ($action === 'save') {
@@ -288,7 +238,6 @@ class FormController extends BaseController
                 'LabelText' => $fieldInput['labelText'],
                 'InputClass' => '',
                 'DivClass' => '',
-                'fieldHTML' => '',
             ];
             $index = -1;
             // Find index of form name field
@@ -351,12 +300,6 @@ class FormController extends BaseController
         foreach ($defaultData as &$subarray) {
             unset($subarray['FieldID']);
         }
-        // Check if content has been edited
-        if ($defaultData === $fieldData)
-            $edited = false;
-        else
-            $edited = true;
-        $data['edited'] = $edited;
         return view('updateForm', ['data' => $data]);
     }
 }

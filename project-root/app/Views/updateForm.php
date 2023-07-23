@@ -34,9 +34,6 @@
                                 <a class="nav-link" data-bs-toggle="tab" href="#tab2">Textbox</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#tab3">Dropdown</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#tab4">Checkbox</a>
                             </li>
                             <li class="nav-item">
@@ -139,19 +136,6 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="fieldType" value="textBox">
-                                    <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
-                                    <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
-                                    <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
-                                    <button type="button" class="btn btn-primary save-button float-right" data-toggle="modal" data-target="#formNameModal">Save Changes</button>
-                                </form>
-                            </div>
-                            <div class="tab-pane fade" id="tab3">
-                                <br>
-                                <h5 class="card-title">Dropdown Field</h5>
-                                <form method="POST" action="<?= base_url('/update/' . $data['slug']) ?>">
-                                    <?= csrf_field() ?>
-                                    <!-- Form inputs for DropDown -->
-                                    <input type="hidden" name="fieldType" value="dropdown">
                                     <input type="hidden" name="selectedFieldID" value="<?= $selectedFieldID ?>">
                                     <button type="submit" class="btn btn-primary update-button" name="action" value="update" id="updateButton">Update</button>
                                     <button type="submit" class="btn btn-primary add-button" name="action" value="add">Add Field</button>
@@ -283,25 +267,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="../js/toast/form.js"></script>
     <script>
-        $(document).ready(function() {
-            // Check the value of $data['edited']
-            var isEdited = <?= json_encode($data['edited']) ?>;
-
-            // Function to toggle the visibility of .save-button
-            function toggleSaveButtonVisibility() {
-                // Check the value of isEdited
-                if (isEdited) {
-                    // If $data['edited'] is true, show all .save-button
-                    $('.save-button').show();
-                } else {
-                    // If $data['edited'] is false, hide all .save-button
-                    $('.save-button').hide();
-                }
-            }
-
-            // Initially call the function to set the visibility based on the value of $data['edited']
-            toggleSaveButtonVisibility();
-        });
         // Get all elements with the 'close-icon' class
         const closeIcons = document.querySelectorAll('.close-icon');
 
@@ -384,7 +349,6 @@
             // Find the 'Add' button with matching data-fieldtype attribute in each tab
             const addButtonInTab1 = $('#tab1 input[value="' + selectedFieldType + '"]');
             const addButtonInTab2 = $('#tab2 input[value="' + selectedFieldType + '"]');
-            const addButtonInTab3 = $('#tab3 input[value="' + selectedFieldType + '"]');
             const addButtonInTab4 = $('#tab4 input[value="' + selectedFieldType + '"]');
             const addButtonInTab5 = $('#tab5 input[value="' + selectedFieldType + '"]');
             const addButtonInTab6 = $('#tab6 input[value="' + selectedFieldType + '"]');
@@ -403,11 +367,6 @@
                 $('.nav-item a[href="#tab2"]').addClass('active').parent().siblings().find('a').removeClass('active');
                 $('#tab2').addClass('show active').siblings('.tab-pane').removeClass('show active');
                 populateInputsInCurrentTab(selectedFieldData, '#tab2');
-            } else if (selectedFieldType && addButtonInTab3.length) {
-                $('.update-button').removeAttr('hidden');
-                $('.nav-item a[href="#tab3"]').addClass('active').parent().siblings().find('a').removeClass('active');
-                $('#tab3').addClass('show active').siblings('.tab-pane').removeClass('show active');
-                populateInputsInCurrentTab(selectedFieldData, '#tab3');
             } else if (selectedFieldType && addButtonInTab4.length) {
                 $('.update-button').removeAttr('hidden');
                 $('.nav-item a[href="#tab4"]').addClass('active').parent().siblings().find('a').removeClass('active');

@@ -8,9 +8,6 @@ class FormBuilder extends Migration
 {
     public function up()
     {
-        // $this->forge->dropTable('forms');
-        // $this->forge->dropTable('users');
-        // $this->forge->dropTable('form_fields');
         //Forms Table
         $this->forge->addField([
             'formID' => [
@@ -98,9 +95,6 @@ class FormBuilder extends Migration
             'DivClass' => [
                 'type' => 'VARCHAR',
                 'constraint' => '100',
-            ],
-            'fieldHTML' => [
-                'type' => 'TEXT',
             ],
             'UserID' => [
                 'type' => 'INT',
