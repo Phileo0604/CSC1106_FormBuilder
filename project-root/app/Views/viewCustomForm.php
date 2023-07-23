@@ -49,8 +49,9 @@
         <div class='row'>
             <h5 class="mt-3">Form Preview</h5>
             <div class="btn-group ml-auto" role="group" aria-label="SaveExportGroup">
-                <button type="button" class="btn btn-outline-primary ml-auto" id="saveCustomFormBtn" data-toggle="modal" data-target="#formNameModal">Save Form</button>
-                <button class="btn btn-outline-primary ml-auto" id="exportBtn" onclick="exportToPDF()">Print</button>
+                <button class="btn btn-info ml-auto" id="refreshBtn" onclick="refresh()">Refresh</button>
+                <button type="button" class="btn btn-primary ml-auto" id="saveCustomFormBtn" data-toggle="modal" data-target="#formNameModal">Save Form</button>
+                <button class="btn btn-success ml-auto" id="exportBtn" onclick="exportToPDF()">Print</button>
             </div>
         </div>
         <hr>
@@ -59,6 +60,10 @@
         <?= $html ?>
     </div>
     <script>
+        function refresh() {
+            location.reload();
+        }
+
         function exportToPDF() {
             // Hide the export button before printing
             const exportBtn = document.getElementById("nonprintable");

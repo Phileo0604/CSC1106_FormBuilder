@@ -19,7 +19,7 @@
     <div class='container' id='nonprintable'>
         <div class='row'>
             <h5 class="mt-3">Form Preview</h5>
-            <button class="btn btn-outline-primary ml-auto" id="exportBtn" onclick="exportToPDF()">Print</button>
+            <button class="btn btn-success ml-auto" id="exportBtn" onclick="exportToPDF()">Print</button>
         </div>
         <hr>
     </div>
