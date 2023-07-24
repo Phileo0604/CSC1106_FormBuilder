@@ -19,6 +19,7 @@
 
 .field-hover:hover {
     background-color: lightcyan;
+    cursor: pointer;
     /* Very light gray color */
 }
 
