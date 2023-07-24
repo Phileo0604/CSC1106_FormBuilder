@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             [
                 'name'       => 'Timothy Tan',
                 'email'      => 'tim@gmail.com',
-                'password'   => Hash::make('12345'),
+                'password'   => Hash::make('password123'),
                 // Add token generation for uuid
                 'uuid'       => generateToken(),
                 'updated_at' => null,
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             [
                 'name'       => 'Tan Kai Yang',
                 'email'      => 'kaiyang@gmail.com',
-                'password'   => Hash::make('12345'),
+                'password'   => Hash::make('password123'),
                 // Add token generation for uuid
                 'uuid'       => generateToken(),
                 'updated_at' => null,
