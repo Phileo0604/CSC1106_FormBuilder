@@ -28,6 +28,6 @@ Login Credentials
 Email: tim@gmail.com
 Password: password123
 Usage
-Open your web browser and navigate to http://localhost:8080 (assuming the development server is running on port 8080).
+Open your web browser and navigate to http://localhost:8080
 
 Login using the provided credentials.
