@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - User must have a database schema named ci4formdb.
-- Make sure you have CodeIgniter 4 installed.
+- The database must be running on port 3306 (MySQL default port).
 
 ## Installation
 
